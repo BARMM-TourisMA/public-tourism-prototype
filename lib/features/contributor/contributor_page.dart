@@ -25,7 +25,7 @@ class _ContributorPageState extends State<ContributorPage> {
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) { 
                 if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
                   return ListView.builder(
-                    itemCount: snapshot.data,
+                    itemCount: snapshot.data!.docs.length,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return InkWell(
