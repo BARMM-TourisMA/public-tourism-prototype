@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "365608895395",
+    "project_id": "tourisma-5d4bd",
+    "storage_bucket": "tourisma-5d4bd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:365608895395:android:343038c5c8bd8131c61016",
+        "android_client_info": {
+          "package_name": "com.barmm_camp.tourisma"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "365608895395-p6669k0mip3vvegfmbmb7656plat0eu6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWoBhDNlA1VokkKAEGNgp4F5SheXl-Tk8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "365608895395-p6669k0mip3vvegfmbmb7656plat0eu6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
