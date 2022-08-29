@@ -2,20 +2,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:public_tourism/common/constants.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class ContributorPage extends StatefulWidget {
+  const ContributorPage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<ContributorPage> createState() => _ContributorPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _ContributorPageState extends State<ContributorPage> {
   final postsCollection = FirebaseFirestore.instance.collection(AppContants.postCollection);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Home Page"),
+        title: const Text("Contributor Page"),
       ),
       body: Center(
         child: Stack(
