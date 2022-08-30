@@ -49,9 +49,9 @@ class PostResource extends BaseResource<PostModel, int>{
     await for (QuerySnapshot q in snapshot) {
       var list = q.docs.map((doc) {
         final data = doc.data() as Map<String, dynamic>;
+        
         final post = PostModel.fromJson(data);
-        post.key = doc.id;
-        return post;
+        return post.copyWith(key: doc.id);
       }).toList();
       yield list;
     } 
