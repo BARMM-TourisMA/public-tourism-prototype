@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
                     itemBuilder: (context, index) {
                       return InkWell(
                         onTap: () {
-
+                          
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(8),
@@ -54,14 +54,14 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          IconButton(onPressed: () {
-
+          IconButton(onPressed: () async {
+            Navigator.pushNamed(context, AppContants.postCollection);
           }, icon: const Icon(Icons.add_a_photo)),
           IconButton(onPressed: () {
-
+            Navigator.pushNamed(context, AppContants.postCollection);
           }, icon: const Icon(Icons.apps)),
           IconButton(onPressed: () {
-
+            Navigator.pushNamed(context, AppContants.postCollection);
           }, icon: const Icon(Icons.person))
         ],
       ),

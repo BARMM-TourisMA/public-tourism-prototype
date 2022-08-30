@@ -1,8 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:public_tourism/common/constants.dart';
-import 'package:public_tourism/features/home/home_page.dart';
 import 'package:public_tourism/firebase_options.dart';
 import 'package:public_tourism/routes.dart';
 
