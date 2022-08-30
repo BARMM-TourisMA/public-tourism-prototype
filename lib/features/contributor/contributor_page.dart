@@ -55,13 +55,16 @@ class _ContributorPageState extends State<ContributorPage> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           IconButton(onPressed: () {
-
-          }, icon: const Icon(Icons.add_a_photo)),
+            Navigator.pop(context);
+          }, icon: const Icon(Icons.home)),
           IconButton(onPressed: () {
 
           }, icon: const Icon(Icons.apps)),
           IconButton(onPressed: () {
-
+            Navigator.pushNamed(context, AppContants.postRoute);
+          }, icon: const Icon(Icons.add_circle)),
+          IconButton(onPressed: () {
+            
           }, icon: const Icon(Icons.person))
         ],
       ),

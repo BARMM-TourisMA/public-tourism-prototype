@@ -55,13 +55,13 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           IconButton(onPressed: () async {
-            Navigator.pushNamed(context, AppContants.postCollection);
+            Navigator.pushNamed(context, AppContants.contributorRoute);
           }, icon: const Icon(Icons.add_a_photo)),
           IconButton(onPressed: () {
-            Navigator.pushNamed(context, AppContants.postCollection);
+            Navigator.pushNamed(context, AppContants.contributorRoute);
           }, icon: const Icon(Icons.apps)),
           IconButton(onPressed: () {
-            Navigator.pushNamed(context, AppContants.postCollection);
+            Navigator.pushNamed(context, AppContants.contributorRoute);
           }, icon: const Icon(Icons.person))
         ],
       ),
