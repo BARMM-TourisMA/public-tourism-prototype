@@ -1,11 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:intl/intl.dart';
 import 'package:public_tourism/common/constants.dart';
+import 'package:public_tourism/common/models/resource_model.dart';
 
-class PostModel {
+class PostModel extends ResourceModel {
   late String key;
   String? title;
   String? description;
@@ -24,10 +24,10 @@ class PostModel {
   Map<String, dynamic> toMap() {
     final formater = DateFormat(AppContants.dateFormat);
     return {
-      "key": title,
       "title": title,
       "description": description,
       "attachments": attachments,
+      "hearts": hearts,
       "dateCreated": dateCreated != null ? formater.format(dateCreated!) : '',
       "dateUpdated": dateUpdated != null ? formater.format(dateUpdated!) : '',
     };
@@ -39,12 +39,15 @@ class PostModel {
   factory PostModel.fromJson(Map<String, dynamic> json) {
     final formater = DateFormat(AppContants.dateFormat);
     return PostModel(
-      title: json['title']?? '',
-      description: json['description'] ?? '',
-      hearts: json['hearts'] is int ? json['hearts']: 0,
+      title: json['title'] is String ? json['title']: '',
+      description: json['description'] is String ? json['description'] : '',
+      hearts: (json['hearts'] is int) ? json['hearts']: 0,
       attachments: json['attachments'] is List<String> ? json['attachments']: null,
       dateCreated: ((json['dateCreated'] ?? '').isNotEmpty) ? formater.parse(json['dateCreated']): null,
       dateUpdated: ((json['dateUpdated'] ?? '').isNotEmpty) ? formater.parse(json['dateUpdated']): null,
     );
-  } 
+  }
+  
+  @override
+  get id => key; 
 }

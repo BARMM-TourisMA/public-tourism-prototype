@@ -1,12 +1,10 @@
 
 
 import 'package:hive/hive.dart';
+import 'package:public_tourism/common/models/resource_model.dart';
 
 enum DocStatus { created, saved, synced, updated, deleted }
 
-abstract class ResourceModel {
-  dynamic get id;
-}
 
 typedef Filter = Map<String, dynamic>;
 
@@ -84,6 +82,7 @@ abstract class BaseResource<T extends ResourceModel, K> {
 
   Future<List<ResourceDoc<T, K>>> findDocs(
       {Filter? filter, PageInfo<T>? pageInfo}) async {
+    
     
     throw "not implemted";
   }

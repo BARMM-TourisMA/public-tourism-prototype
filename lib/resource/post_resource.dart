@@ -1,12 +1,9 @@
+import 'package:public_tourism/common/constants.dart';
+import 'package:public_tourism/common/models/post_model.dart';
 import 'package:public_tourism/resource/base.resource.dart';
 
-class PostModel extends ResourceModel {
-  @override
-  get id => throw UnimplementedError();
-}
-
 class PostResource extends BaseResource<PostModel, int>{
-  static PostResource store = PostResource('post');
+  static PostResource store = PostResource(AppContants.postCollection);
   PostResource(super.collection, {super.keyField});
 
   @override
