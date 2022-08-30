@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:public_tourism/common/constants.dart';
+import 'package:public_tourism/common/models/post_model.dart';
+import 'package:public_tourism/resource/post_resource.dart';
 
 class ContributorPage extends StatefulWidget {
   const ContributorPage({Key? key}) : super(key: key);
@@ -10,7 +12,6 @@ class ContributorPage extends StatefulWidget {
 }
 
 class _ContributorPageState extends State<ContributorPage> {
-  final postsCollection = FirebaseFirestore.instance.collection(AppContants.postCollection);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,22 +22,29 @@ class _ContributorPageState extends State<ContributorPage> {
         child: Stack(
           children: [
             StreamBuilder(
-              stream: postsCollection.snapshots(),
-              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) { 
-                if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
+              stream: PostResource.store.stream(),
+              builder: (BuildContext context, AsyncSnapshot<List<PostModel>> snapshot) { 
+                if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                   return ListView.builder(
-                    itemCount: snapshot.data!.docs.length,
+                    itemCount: snapshot.data!.length,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
+                      final post = snapshot.data![index];
                       return InkWell(
                         onTap: () {
 
                         },
-                        child: Padding(
+                        child: Container(
                           padding: const EdgeInsets.all(8),
+                          margin: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            color: Colors.green
+                          ),
                           child: Column(
-                            children: const  [
-                              Text('Image')
+                            children:  [
+                              Text(post.title ?? 'No Title'),
+                              Text(post.description ?? 'No Description')
                             ],
                           ),),
                       );
