@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:public_tourism/common/constants.dart';
 import 'package:public_tourism/common/models/post_model.dart';
+import 'package:public_tourism/resource/post_resource.dart';
 
 class ContributorPage extends StatefulWidget {
   const ContributorPage({Key? key}) : super(key: key);
@@ -11,7 +12,6 @@ class ContributorPage extends StatefulWidget {
 }
 
 class _ContributorPageState extends State<ContributorPage> {
-  final postsCollection = FirebaseFirestore.instance.collection(AppContants.postCollection);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,17 +22,14 @@ class _ContributorPageState extends State<ContributorPage> {
         child: Stack(
           children: [
             StreamBuilder(
-              stream: postsCollection.snapshots(),
-              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) { 
-                if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
+              stream: PostResource.store.stream(),
+              builder: (BuildContext context, AsyncSnapshot<List<PostModel>> snapshot) { 
+                if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                   return ListView.builder(
-                    itemCount: snapshot.data!.docs.length,
+                    itemCount: snapshot.data!.length,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
-                      final doc = snapshot.data!.docs[index];
-                      final map = doc.data();
-                      final post = PostModel.fromJson(map);
-                      post.key = doc.id ?? '';
+                      final post = snapshot.data![index];
                       return InkWell(
                         onTap: () {
 

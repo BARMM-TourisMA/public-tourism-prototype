@@ -28,8 +28,8 @@ class PostModel extends ResourceModel {
       "description": description,
       "attachments": attachments,
       "hearts": hearts,
-      "dateCreated": dateCreated != null ? formater.format(dateCreated!) : '',
-      "dateUpdated": dateUpdated != null ? formater.format(dateUpdated!) : '',
+      "dateCreated": formater.format(dateCreated ?? DateTime.now()),
+      "dateUpdated": formater.format(dateUpdated ?? DateTime.now()),
     };
   }
   String toJson() {

@@ -53,6 +53,7 @@ abstract class BaseResource<T extends ResourceModel, K> {
   Future<T?> syncGet(K key);
   Future<T?> syncUpdate(T record);
   Future<T?> syncPatch(T record, String field);
+  Stream<List<T>> stream({Filter? filter});
 
   //static fields
   static int requestDelay = 1000;
