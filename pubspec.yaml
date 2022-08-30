@@ -39,6 +39,12 @@ dependencies:
   firebase_core: ^1.21.1
   cloud_firestore: ^3.4.6
   intl: ^0.17.0
+  image_picker_web: ^2.1.1
+  firebase_storage: ^10.3.7
+  permission_handler: ^10.0.0
+  image_picker: ^0.8.5+3
+  firebase_storage_web: ^3.3.5
+  carousel_slider: ^4.1.1
 
 dev_dependencies:
   flutter_test:

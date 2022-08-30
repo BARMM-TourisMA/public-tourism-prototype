@@ -3,53 +3,68 @@ import 'package:flutter/material.dart';
 class TourButton extends StatelessWidget {
   final Color? color;
   final Color? textColor;
-  final String text;
+  final String label;
   final IconData? icon;
-  final GestureTapCallback? onPress;
+  final GestureTapCallback? onPressed;
+  final bool? loading;
+  final bool? disabled;
   const TourButton({
     Key? key,
     this.color,
-    required this.text,
-    this.onPress,
-    this.icon, this.textColor,
+    required this.label,
+    this.onPressed,
+    this.icon,
+    this.textColor, 
+    this.loading, this.disabled,
   }) : super(key: key);
-
+  bool get clickable {
+    return loading != true && disabled != true;
+  }
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: InkWell(
-            onTap: () {
-              if (onPress != null) {
-                onPress?.call();
-              }
-            },
-            child: Container(
-              height: 56,
-              margin: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: color?? Colors.primaries.first,
-                borderRadius: BorderRadius.circular(4),
-              ),
-              padding: const EdgeInsets.all(16),
-              child: Center(
-                child: Row(
-                  children: [
-                    if (icon is IconData ) Icon(icon),
-                    const SizedBox(
-                      width: 10,
+    return MouseRegion(
+      cursor: clickable ? SystemMouseCursors.click: SystemMouseCursors.forbidden,
+      child: GestureDetector(
+        onTap: () {
+          if (onPressed != null && clickable) {
+            onPressed?.call();
+          }
+        },
+        child: Container(
+          height: 65,
+          margin: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: clickable ? color ?? Colors.primaries.first: Colors.grey,
+            borderRadius: BorderRadius.circular(25),
+          ),
+          padding: const EdgeInsets.all(16),
+          child: Center(
+            child: Row(
+              children: [
+                if (loading == true)
+                  SizedBox(
+                    height: 20, width: 20,
+                    child: CircularProgressIndicator(
+                      color: textColor ?? Colors.primaries.last,
                     ),
-                    Text(text, style: TextStyle(
-                      color: textColor ?? Colors.primaries.last
-                    ),)
-                  ],
+                  ) 
+                else if (icon is IconData) Icon(icon, color: textColor ?? Colors.primaries.last,),
+                const SizedBox(
+                  width: 10,
                 ),
-              ),
+                Text(
+                  label,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: textColor ?? Colors.primaries.last,
+                    fontWeight: FontWeight.bold
+                  ),
+                )
+              ],
             ),
           ),
         ),
-      ],
+      ),
     );
   }
 }
