@@ -82,7 +82,9 @@ abstract class BaseResource<T extends ResourceModel, K> {
       {Filter? filter, PageInfo<T>? pageInfo}) async {
     final box = await boxReady;
     
-    var list = box.toMap().values.map((e) => _docFromMap(e)).toList();
+    var list = box.toMap().map((k, e) {
+      return MapEntry(k.toString(), _docFromMap(e));
+    }).values.toList();
     return list
         .where((element) => filter == null || element.record == fromMap(filter))
         .toList();

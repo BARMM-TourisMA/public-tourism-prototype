@@ -28,22 +28,27 @@ class ResourceDoc<T extends ResourceModel, K> {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'status': status.toString(),
+      'status': status.name,
       'key': key.toString(),
       'record': record.toMap(),
     };
   }
 
   static DocStatus fromStrEnum(String enumStr) {
-    return DocStatus.values
-        .firstWhere((key) => key.toString() == 'DocStatus.$enumStr');
+    DocStatus status = DocStatus.created;
+    for (var val in DocStatus.values) {
+      if (val.name == enumStr) {
+        status = val;
+      }
+    }
+    return status;
   }
 
   factory ResourceDoc.fromMap(Map<String, dynamic> map) {
     return ResourceDoc<T, K>(
       status:
           map['status'] != null ? fromStrEnum(map['status']) : DocStatus.saved,
-      key: map['key'],
+      key: map['key'] ?? '',
       record: map['record'],
     );
   }
