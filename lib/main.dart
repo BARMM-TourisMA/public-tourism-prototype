@@ -44,6 +44,7 @@ class PublicTourismApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      
       title: 'Public Tourism App',
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
