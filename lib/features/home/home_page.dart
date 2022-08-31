@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:public_tourism/common/constants.dart';
 import 'package:public_tourism/common/models/post_model.dart';
@@ -16,6 +17,18 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("TouristMA"),
+        actions: [
+          IconButton(
+              onPressed: () async {
+                await FirebaseAuth.instance.signInAnonymously().then((value) {
+                  if (value.user?.uid != null) {
+                    Navigator.pushReplacementNamed(
+                        context, AppContants.homeRoute);
+                  }
+                });
+              },
+              icon: const Icon(Icons.login))
+        ],
       ),
       
       body: SingleChildScrollView(
@@ -71,7 +84,8 @@ class _HomePageState extends State<HomePage> {
  
             StreamBuilder(
               stream: PostResource.store.stream(),
-              builder: (BuildContext context, AsyncSnapshot<List<PostModel>> snapshot) { 
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<PostModel>> snapshot) {
                 if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                   return ListView.builder(
                     itemCount: snapshot.data!.length,
@@ -79,24 +93,26 @@ class _HomePageState extends State<HomePage> {
                     itemBuilder: (context, index) {
                       var item = snapshot.data![index];
                       return InkWell(
-                        onTap: () {
-                          
-                        },
+                        onTap: () {},
                         child: Padding(
                           padding: const EdgeInsets.all(8),
                           child: Column(
-                            children:  [
-                              Text((item.title is String) ? item.title ?? '' : "No Title")
+                            children: [
+                              Text((item.title is String)
+                                  ? item.title ?? ''
+                                  : "No Title")
                             ],
-                          ),),
+                          ),
+                        ),
                       );
-                  },);
+                    },
+                  );
                 } else {
                   return const Center(
                     child: Text("No post available"),
                   );
                 }
-             },
+              },
             ),
           ],
         ),
@@ -105,15 +121,21 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          IconButton(onPressed: () async {
-            Navigator.pushNamed(context, AppContants.contributorRoute);
-          }, icon: const Icon(Icons.add_a_photo)),
-          IconButton(onPressed: () {
-            Navigator.pushNamed(context, AppContants.contributorRoute);
-          }, icon: const Icon(Icons.apps)),
-          IconButton(onPressed: () {
-            Navigator.pushNamed(context, AppContants.contributorRoute);
-          }, icon: const Icon(Icons.person))
+          IconButton(
+              onPressed: () async {
+                Navigator.pushNamed(context, AppContants.contributorRoute);
+              },
+              icon: const Icon(Icons.add_a_photo)),
+          IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, AppContants.contributorRoute);
+              },
+              icon: const Icon(Icons.apps)),
+          IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, AppContants.contributorRoute);
+              },
+              icon: const Icon(Icons.person))
         ],
       ),
     );

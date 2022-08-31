@@ -3,7 +3,7 @@ import 'package:public_tourism/common/constants.dart';
 import 'package:public_tourism/common/models/post_model.dart';
 import 'package:public_tourism/resource/base.resource.dart';
 
-class PostResource extends BaseResource<PostModel, int>{
+class PostResource extends BaseResource<PostModel, int> {
   static PostResource store = PostResource(AppContants.postCollection);
   PostResource(super.collection, {super.keyField});
 
@@ -41,20 +41,28 @@ class PostResource extends BaseResource<PostModel, int>{
   Future<PostModel?> syncUpdate(PostModel record) async {
     return null;
   }
-  
+
   @override
-  Stream<List<PostModel>> stream({Filter? filter}) async * {
+  Stream<List<PostModel>> stream({Filter? filter}) async* {
     final coll = FirebaseFirestore.instance.collection(collection);
     final snapshot = coll.snapshots();
+    //final offline = await find(filter: filter);
+    //yield offline;
     await for (QuerySnapshot q in snapshot) {
       var list = q.docs.map((doc) {
         final data = doc.data() as Map<String, dynamic>;
-        
+
         final post = PostModel.fromJson(data);
-        return post.copyWith(key: doc.id);
+        final copy = post.copyWith(key: doc.id);
+        setRecord(copy);
+        return copy;
       }).toList();
       yield list;
-    } 
+    }
+  }
+
+  @override
+  PostModel fromMap(Filter filter) {
+    return PostModel.fromMap(filter);
   }
 }
-
