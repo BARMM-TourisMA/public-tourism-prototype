@@ -23,7 +23,7 @@ class PostItem extends StatelessWidget {
         margin: const EdgeInsets.only(top: 16),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: const Color(0xFF2D2C2C)),
+            color: AppContants.secondaryColor),
         child: Column(
           children: [
             Container(

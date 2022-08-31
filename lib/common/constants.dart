@@ -14,6 +14,7 @@ class AppContants {
   static Color backgroundColor = const Color(0xFF011530);
   static Color textFieldColor = const Color(0xFF00EEEE);
   static Color textColor = Colors.white;
+  static Color secondaryColor = const Color(0xFF2D2C2C);
   //Common
   static double toolbarHeight = 70;
   static TextStyle defaultTextStyle = TextStyle(

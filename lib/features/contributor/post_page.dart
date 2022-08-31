@@ -132,22 +132,27 @@ class _PostPageState extends State<PostPage> {
             )
           ],
           for (var item in _images) ...[
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 20),
-              height: 20,
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
-                child: LinearProgressIndicator(
-                  value: item.progress,
-                  valueColor:
-                      const AlwaysStoppedAnimation<Color>(Color(0xff00ff00)),
-                  backgroundColor: const Color(0xffD6D6D6),
+            if (isBusy)
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 20),
+                height: 20,
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  child: LinearProgressIndicator(
+                    value: item.progress,
+                    valueColor:
+                        const AlwaysStoppedAnimation<Color>(Color(0xff00ff00)),
+                    backgroundColor: const Color(0xffD6D6D6),
+                  ),
                 ),
               ),
-            ),
-            Text(
-              "${item.title} ${isBusy ? '${(100 * item.progress).round()}%' : '(ready for submission)'}",
-              style: AppContants.defaultTextStyle,
+            Container(
+              margin: const EdgeInsets.all(2.5),
+              decoration: BoxDecoration(color: AppContants.secondaryColor, borderRadius: BorderRadius.circular(5)),
+              child: Text(
+                "${item.title} ${isBusy ? '${(100 * item.progress).round()}%' : ''}",
+                style: AppContants.defaultTextStyle,
+              ),
             )
           ],
         ],
@@ -227,7 +232,7 @@ class _PostPageState extends State<PostPage> {
                           return null;
                         },
                       ),
-                      Expanded(child: progress),
+                      Expanded(child: SingleChildScrollView(child: progress,)),
                     ],
                   ),
                 )),
