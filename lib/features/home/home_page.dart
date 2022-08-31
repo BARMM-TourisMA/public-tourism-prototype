@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:public_tourism/common/constants.dart';
 //import 'package:public_tourism/common/models/post_model.dart';

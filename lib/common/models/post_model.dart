@@ -28,10 +28,10 @@ class PostModel extends ResourceModel {
     this.hearts = 0,
     this.attachments = const [],
   });
+  @override
   Map<String, dynamic> toMap() {
     final formater = DateFormat(AppContants.dateFormat);
     return <String, dynamic>{
-      'key': key,
       'title': title,
       'description': description,
       'location': location,
@@ -55,7 +55,7 @@ class PostModel extends ResourceModel {
       category: json['category'] is String ? json['category'] : '',
       hearts: (json['hearts'] is int) ? json['hearts'] : 0,
       attachments:
-          json['attachments'] is List<String> ? json['attachments'] : null,
+          json['attachments'] is List ? List<String>.from(json['attachments']) : null,
       dateCreated: ((json['dateCreated'] ?? '').isNotEmpty)
           ? formater.parse(json['dateCreated'])
           : null,
@@ -116,10 +116,11 @@ class PostModel extends ResourceModel {
         hearts.hashCode ^
         attachments.hashCode;
   }
-
+  @override
   factory PostModel.fromMap(Map<String, dynamic> map) {
+    final formater = DateFormat(AppContants.dateFormat);
     return PostModel(
-      key: map['key'] as String,
+      key: map.keys.contains('key') ? map['key'] as String: '',
       title: map['title'] != null ? map['title'] as String : null,
       description:
           map['description'] != null ? map['description'] as String : null,
@@ -128,13 +129,13 @@ class PostModel extends ResourceModel {
       category:
           map['category'] != null ? map['category'] as String : null,
       dateCreated: map['dateCreated'] != null
-          ? DateTime.fromMillisecondsSinceEpoch(map['dateCreated'] as int)
+          ? formater.parse(map['dateCreated'] as String)
           : null,
       dateUpdated: map['dateUpdated'] != null
-          ? DateTime.fromMillisecondsSinceEpoch(map['dateUpdated'] as int)
+          ? formater.parse(map['dateUpdated'] as String)
           : null,
-      hearts: map['hearts'] != null ? map['hearts'] as int : null,
-      attachments: List<String>.from(map['attachments']),
+      hearts: map['hearts'] != null ? map['hearts'] as int : 0,
+      attachments: map['attachments'] != null ? List<String>.from(map['attachments']): const [],
     );
   }
 

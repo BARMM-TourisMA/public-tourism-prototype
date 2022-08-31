@@ -9,8 +9,7 @@
             "request": "launch",
             "type": "dart",
             "args": ["-d", "chrome"
-            ,"--dart-define=DEV_MODE=true" 
-        ]
+            ,"--dart-define=DEV_MODE=true" ]
         },
         {
             "name": "public_tourism (profile mode)",
