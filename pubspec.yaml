@@ -49,7 +49,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  
+
+ 
+
   integration_test: ^0.8.1
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -69,6 +71,8 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+assets:
+  - assets/tandu.jpg
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
