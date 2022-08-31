@@ -1,6 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 
 import '../common/models/post_model.dart';
@@ -24,8 +21,8 @@ class LatestPost extends StatelessWidget {
                     return InkWell(
                       onTap: () {},
                       child: Container(
-                        margin: EdgeInsets.all(5),
-                        padding: EdgeInsets.all(3),
+                        margin: const EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(3),
                         height: 250,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(3),
@@ -37,10 +34,10 @@ class LatestPost extends StatelessWidget {
                             Container(
                               height: 80,
                              // color: Colors.green,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                   image: DecorationImage(
                                     image:
-                                        new AssetImage("../assets/tandu.jpg"),
+                                       AssetImage("../assets/tandu.jpg"),
                                     fit: BoxFit.fill,
                                   )
                                   //<-- SEE HERE
