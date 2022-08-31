@@ -6,6 +6,7 @@ class AppContants {
   static String postCollection = "posts";
   //routes
   static String homeRoute = "/";
+  static String startUpRoute = "/start";
   static String contributorRoute = "/contributor";
   static String postRoute = "/post";
 

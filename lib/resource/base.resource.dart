@@ -1,23 +1,11 @@
-
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:hive/hive.dart';
+
 import 'package:public_tourism/common/models/resource_model.dart';
-
-enum DocStatus { created, saved, synced, updated, deleted }
-
+import 'package:public_tourism/resource/resource_doc.dart';
 
 typedef Filter = Map<String, dynamic>;
-
-class ResourceDoc<T extends ResourceModel, K> {
-  DocStatus status;
-  final K key;
-  T record;
-  ResourceDoc({
-    required this.status,
-    required this.key,
-    required this.record,
-  });
-}
 
 class PageInfo<T extends ResourceModel> {
   final int rowsPerPage;
@@ -29,27 +17,30 @@ class PageInfo<T extends ResourceModel> {
 }
 
 abstract class BaseResource<T extends ResourceModel, K> {
-  static final List<Future> _boxex = []; 
+  static final List<Future> _boxex = [];
   static Future ensureResources() async {
     await Future.forEach(_boxex, (element) => null);
   }
+
   //constructor
   BaseResource(this.collection, {this.keyField}) {
-    boxReady = Hive.openBox<ResourceDoc<T, K>>(collection);
+    boxReady = Hive.openBox<Map<String, dynamic>>(collection);
     _boxex.add(boxReady);
   }
   int hashFrom(String value) {
     return value.hashCode;
   }
+
   //fields
   final String collection;
-  late Future<Box<ResourceDoc<T, K>>> boxReady;
+  late Future<Box<Map<String, dynamic>>> boxReady;
   String? keyField;
   //abstract methods
   Future<T?> syncCreate(T recored);
   Future<T?> syncDelete(T recored);
   Future<bool?> syncClear();
   Future<List<T>?> syncFind(Filter? filter);
+  T fromMap(Filter filter);
   Future<T?> syncGet(K key);
   Future<T?> syncUpdate(T record);
   Future<T?> syncPatch(T record, String field);
@@ -81,11 +72,20 @@ abstract class BaseResource<T extends ResourceModel, K> {
     }
   }
 
+  ResourceDoc<T, K> _docFromMap(Map<String, dynamic> map) {
+    
+    map['record'] = fromMap(map['record']); 
+    return ResourceDoc.fromMap(map);
+  }
+
   Future<List<ResourceDoc<T, K>>> findDocs(
       {Filter? filter, PageInfo<T>? pageInfo}) async {
+    final box = await boxReady;
     
-    
-    throw "not implemted";
+    var list = box.toMap().values.map((e) => _docFromMap(e)).toList();
+    return list
+        .where((element) => filter == null || element.record == fromMap(filter))
+        .toList();
   }
 
   Future<List<T>> find({Filter? filter, PageInfo<T>? pageInfo}) async {
@@ -98,7 +98,11 @@ abstract class BaseResource<T extends ResourceModel, K> {
 
   Future<ResourceDoc<T, K>?> findOneDoc({K? key, Filter? filter}) async {
     final box = await boxReady;
-    return box.get(key);
+    final doc = box.get(key);
+    if (null != doc) {
+      return _docFromMap(doc);
+    }
+    return null;
   }
 
   Future<T?> findOne({K? key, Filter? filter}) async {
@@ -107,19 +111,36 @@ abstract class BaseResource<T extends ResourceModel, K> {
   }
 
   Future<T> setRecord(T record,
-      {K? key, bool? createOnly, DocStatus? docStatus}) {
-    throw "not implemted";
+      {K? key, bool? createOnly, DocStatus? docStatus}) async {
+    final box = await boxReady;
+    await box.put(
+        record.id,
+        ResourceDoc(
+                status: docStatus ?? DocStatus.created,
+                key: record.id,
+                record: record)
+            .toMap());
+    return record;
   }
-  Future<T> setRecordStatus({K? key, DocStatus? docStatus}) {
-    throw "not implemted";
+
+  Future<T?> setRecordStatus({K? key, DocStatus? docStatus}) async {
+    final box = await boxReady;
+    final old = await findOneDoc(key: key);
+    if (old is ResourceDoc) {
+      final updated = old!.copyWith(status: docStatus ?? old.status);
+      await box.put(key, updated.toMap());
+      return updated.record;
+    }
+    return null;
   }
+
   Future<T> updateData(K key, T value) async {
     final existing = await findOneDoc(key: key);
     if (existing is ResourceDoc<T, K>) {
       final box = await boxReady;
       existing.record = value;
       existing.status = DocStatus.updated;
-      await box.put(key, existing);
+      await box.put(key, existing.toMap());
       _manageDocSyncing(existing);
     }
     return existing?.record ?? value;

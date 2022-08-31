@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
@@ -24,8 +25,8 @@ void main() async {
       persistenceEnabled: false,
     );
     
-    // [Authentication | localhost:9099]
-    // await FirebaseAuth.instance.useEmulator('http://localhost:9099');
+    //[Authentication | localhost:9099]
+    await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
 
     //[Storage | localhost:9199]
     await FirebaseStorage.instance.useStorageEmulator(
@@ -48,7 +49,7 @@ class PublicTourismApp extends StatelessWidget {
         primarySwatch: Colors.blueGrey,
         fontFamily: "Raleway"
       ),
-      initialRoute: AppContants.homeRoute,
+      initialRoute: AppContants.startUpRoute,
       routes: appRoutes,
     );
   }
