@@ -37,7 +37,7 @@ class _MostHeartState extends State<MostHeart> {
                   decoration: BoxDecoration(
                       border: Border.all(width: 1),
                       borderRadius: BorderRadius.circular(20),
-                      image: new DecorationImage(
+                      image: DecorationImage(
                         image: new AssetImage("../assets/tandu.jpg"),
                         fit: BoxFit.fill,
                       )
