@@ -1,6 +1,3 @@
-//import 'package:flutter/cupertino.dart';
-//import 'package:flutter/src/foundation/key.dart';
-//import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 
 class MostHeart extends StatefulWidget {
@@ -13,6 +10,7 @@ class MostHeart extends StatefulWidget {
 class _MostHeartState extends State<MostHeart> {
   @override
   Widget build(BuildContext context) {
+
     return   Container(
                   margin: const EdgeInsets.all(4),
                   padding: const EdgeInsets.all(6),
@@ -45,9 +43,6 @@ class _MostHeartState extends State<MostHeart> {
                       ),
                   
                 );
-                  
-      
-
 
   }
 }

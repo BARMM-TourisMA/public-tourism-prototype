@@ -31,13 +31,13 @@ class TourButton extends StatelessWidget {
           }
         },
         child: Container(
-          height: 65,
+          height: 45,
           margin: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: clickable ? color ?? Colors.primaries.first: Colors.grey,
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: BorderRadius.circular(15),
           ),
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(10),
           child: Center(
             child: Row(
               children: [

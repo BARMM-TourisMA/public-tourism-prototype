@@ -6,8 +6,6 @@ import 'package:public_tourism/common/constants.dart';
 import 'package:public_tourism/widget/latest_post.dart';
 import 'package:public_tourism/widget/most_heart_widget.dart';
 
-//import '../../common/models/post_model.dart';
-//import '../../resource/post_resource.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -26,6 +24,7 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: const Color.fromARGB(255, 0, 24, 44),
       ),
       body: SingleChildScrollView(
+
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -57,9 +56,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-    );
-    
-      Row(
+      bottomNavigationBar: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           IconButton(
@@ -79,5 +76,6 @@ class _HomePageState extends State<HomePage> {
               icon: const Icon(Icons.person))
         ],
       );
+    );
   }
 }
