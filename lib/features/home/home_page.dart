@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:public_tourism/common/constants.dart';
 import 'package:public_tourism/common/models/post_model.dart';
 import 'package:public_tourism/resource/post_resource.dart';
-
+import 'package:public_tourism/widget/most_heart_widget.dart';
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -16,7 +16,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Home Page"),
+        title: const Text("TouristMA"),
         actions: [
           IconButton(
               onPressed: () async {
@@ -30,9 +30,58 @@ class _HomePageState extends State<HomePage> {
               icon: const Icon(Icons.login))
         ],
       ),
-      body: Center(
+      
+      body: SingleChildScrollView(
+
+        
         child: Stack(
           children: [
+            Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const Text(
+              "Most Heart",
+              style: TextStyle(fontSize: 18),
+            ),
+            Row(
+              children: [
+                MostHeart(),
+                MostHeart(),
+                 ],
+            ),
+            const Text(
+              'Demo Headline 2',
+              style: TextStyle(fontSize: 18),
+            ),
+            Card(
+              child: ListTile(
+                  title: Text('Motivation $int'),
+                  subtitle: Text('this is a description of the motivation')),
+            ),
+            Card(
+              child: ListTile(
+                  title: Text('Motivation $int'),
+                  subtitle: Text('this is a description of the motivation')),
+            ),
+            Card(
+              child: ListTile(
+                  title: Text('Motivation $int'),
+                  subtitle: Text('this is a description of the motivation')),
+            ),
+            Card(
+              child: ListTile(
+                  title: Text('Motivation $int'),
+                  subtitle: Text('this is a description of the motivation')),
+            ),
+            Card(
+              child: ListTile(
+                  title: Text('Motivation $int'),
+                  subtitle: Text('this is a description of the motivation')),
+            ),
+          ],
+        ),
+ 
             StreamBuilder(
               stream: PostResource.store.stream(),
               builder: (BuildContext context,
@@ -68,6 +117,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
+
       bottomNavigationBar: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
