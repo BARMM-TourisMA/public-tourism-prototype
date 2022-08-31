@@ -11,6 +11,8 @@ import 'package:public_tourism/common/models/post_model.dart';
 import 'package:public_tourism/common/models/upload_progress_model.dart';
 import 'package:public_tourism/common/widgets/tour_button.dart';
 
+import '../../common/widgets/app_bar.dart';
+
 class PostPage extends StatefulWidget {
   final PostModel? post;
   const PostPage({
@@ -156,27 +158,7 @@ class _PostPageState extends State<PostPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: AppContants.backgroundColor,
-          toolbarHeight: AppContants.toolbarHeight,
-          leadingWidth: AppContants.toolbarHeight,
-          leading: Container(
-            margin: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30), color: Colors.yellow),
-          ),
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text("Welcome",
-                  style: TextStyle(color: Colors.grey, fontSize: 14)),
-              Text(
-                "Juan dela Cruz",
-                style: AppContants.defaultTextStyle,
-              ),
-            ],
-          ),
-        ),
+        appBar: buildAppBar("Juan dela Cruz"),
         backgroundColor: AppContants.backgroundColor,
         body: Stack(
           children: [
