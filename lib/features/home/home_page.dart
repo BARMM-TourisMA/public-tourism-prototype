@@ -97,6 +97,32 @@ class _HomePageState extends State<HomePage> {
                   );
                 }
              },
+                ),
+                Card(
+                  child: ListTile(
+                      title: Text('Motivation $int'),
+                      subtitle:
+                          Text('this is a description of the motivation')),
+                ),
+                Card(
+                  child: ListTile(
+                      title: Text('Motivation $int'),
+                      subtitle:
+                          Text('this is a description of the motivation')),
+                ),
+                Card(
+                  child: ListTile(
+                      title: Text('Motivation $int'),
+                      subtitle:
+                          Text('this is a description of the motivation')),
+                ),
+                Card(
+                  child: ListTile(
+                      title: Text('Motivation $int'),
+                      subtitle:
+                          Text('this is a description of the motivation')),
+                ),
+              ],
             ),
           ],
         ),
