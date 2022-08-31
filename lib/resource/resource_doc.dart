@@ -4,9 +4,9 @@ import 'package:public_tourism/common/models/resource_model.dart';
 
 enum DocStatus { created, saved, synced, updated, deleted }
 
-class ResourceDoc<T extends ResourceModel, K> {
+class ResourceDoc<T extends ResourceModel> {
   DocStatus status;
-  final K key;
+  final String key;
   T record;
   ResourceDoc({
     required this.status,
@@ -14,12 +14,12 @@ class ResourceDoc<T extends ResourceModel, K> {
     required this.record,
   });
 
-  ResourceDoc<T, K> copyWith({
+  ResourceDoc<T> copyWith({
     DocStatus? status,
-    K? key,
+    String? key,
     T? record,
   }) {
-    return ResourceDoc<T, K>(
+    return ResourceDoc<T>(
       status: status ?? this.status,
       key: key ?? this.key,
       record: record ?? this.record,
@@ -45,11 +45,13 @@ class ResourceDoc<T extends ResourceModel, K> {
   }
 
   factory ResourceDoc.fromMap(Map<String, dynamic> map) {
-    return ResourceDoc<T, K>(
-      status:
-          map['status'] != null ? fromStrEnum(map['status']) : DocStatus.saved,
-      key: map['key'] ?? '',
-      record: map['record'],
+    final status = map['status'] != null ? fromStrEnum(map['status']) : DocStatus.saved;
+    final key = map['key'] ?? '';
+    final record = map['record'];
+    return ResourceDoc<T>(
+      status: status,
+      key: key,
+      record: record,
     );
   }
   String toJson() => json.encode(toMap());

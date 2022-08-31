@@ -28,7 +28,7 @@ class PostResource extends BaseResource<PostModel, int> {
   }
 
   @override
-  Future<PostModel?> syncGet(int key) async {
+  Future<PostModel?> syncGet(String key) async {
     return null;
   }
 
@@ -46,8 +46,8 @@ class PostResource extends BaseResource<PostModel, int> {
   Stream<List<PostModel>> stream({Filter? filter}) async* {
     final coll = FirebaseFirestore.instance.collection(collection);
     final snapshot = coll.snapshots();
-    //final offline = await find(filter: filter);
-    //yield offline;
+    final offline = await find(filter: filter);
+    yield offline;
     await for (QuerySnapshot q in snapshot) {
       var list = q.docs.map((doc) {
         final data = doc.data() as Map<String, dynamic>;

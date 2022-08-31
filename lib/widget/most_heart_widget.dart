@@ -14,6 +14,17 @@ class _MostHeartState extends State<MostHeart> {
     return   Container(
                   margin: const EdgeInsets.all(4),
                   padding: const EdgeInsets.all(6),
+                  height: 200,
+                  width: 120,
+                  decoration: BoxDecoration(
+                      border: Border.all(width: 1),
+                      borderRadius: BorderRadius.circular(20),
+                      image: const DecorationImage(
+                        image: AssetImage("../assets/tandu.jpg"),
+                        fit: BoxFit.fill,
+                      )
+                      //<-- SEE HERE
+                      ),
                   child: Column(
                         children: [
                           Row(
@@ -28,18 +39,6 @@ class _MostHeartState extends State<MostHeart> {
                               ],
                             ),  
                         ],
-                      ),
-
-                  height: 200,
-                  width: 120,
-                  decoration: BoxDecoration(
-                      border: Border.all(width: 1),
-                      borderRadius: BorderRadius.circular(20),
-                      image: DecorationImage(
-                        image: new AssetImage("../assets/tandu.jpg"),
-                        fit: BoxFit.fill,
-                      )
-                      //<-- SEE HERE
                       ),
                   
                 );

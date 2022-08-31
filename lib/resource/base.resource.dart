@@ -41,14 +41,14 @@ abstract class BaseResource<T extends ResourceModel, K> {
   Future<bool?> syncClear();
   Future<List<T>?> syncFind(Filter? filter);
   T fromMap(Filter filter);
-  Future<T?> syncGet(K key);
+  Future<T?> syncGet(String key);
   Future<T?> syncUpdate(T record);
   Future<T?> syncPatch(T record, String field);
   Stream<List<T>> stream({Filter? filter});
 
   //static fields
   static int requestDelay = 1000;
-  void _manageDocSyncing(ResourceDoc<T, K> doc) async {
+  void _manageDocSyncing(ResourceDoc<T> doc) async {
     switch (doc.status) {
       case DocStatus.saved:
         var status = await syncCreate(doc.record);
@@ -72,13 +72,13 @@ abstract class BaseResource<T extends ResourceModel, K> {
     }
   }
 
-  ResourceDoc<T, K> _docFromMap(Map<String, dynamic> map) {
+  ResourceDoc<T> _docFromMap(Map<String, dynamic> map) {
     
     map['record'] = fromMap(map['record']); 
-    return ResourceDoc.fromMap(map);
+    return ResourceDoc<T>.fromMap(map);
   }
 
-  Future<List<ResourceDoc<T, K>>> findDocs(
+  Future<List<ResourceDoc<T>>> findDocs(
       {Filter? filter, PageInfo<T>? pageInfo}) async {
     final box = await boxReady;
     
@@ -98,7 +98,7 @@ abstract class BaseResource<T extends ResourceModel, K> {
     }).toList();
   }
 
-  Future<ResourceDoc<T, K>?> findOneDoc({K? key, Filter? filter}) async {
+  Future<ResourceDoc<T>?> findOneDoc({String? key, Filter? filter}) async {
     final box = await boxReady;
     final doc = box.get(key);
     if (null != doc) {
@@ -107,13 +107,13 @@ abstract class BaseResource<T extends ResourceModel, K> {
     return null;
   }
 
-  Future<T?> findOne({K? key, Filter? filter}) async {
+  Future<T?> findOne({String? key, Filter? filter}) async {
     final doc = await findOneDoc(key: key);
     return doc?.record;
   }
 
   Future<T> setRecord(T record,
-      {K? key, bool? createOnly, DocStatus? docStatus}) async {
+      {String? key, bool? createOnly, DocStatus? docStatus}) async {
     final box = await boxReady;
     await box.put(
         record.id,
@@ -125,7 +125,7 @@ abstract class BaseResource<T extends ResourceModel, K> {
     return record;
   }
 
-  Future<T?> setRecordStatus({K? key, DocStatus? docStatus}) async {
+  Future<T?> setRecordStatus({String? key, DocStatus? docStatus}) async {
     final box = await boxReady;
     final old = await findOneDoc(key: key);
     if (old is ResourceDoc) {
@@ -136,9 +136,9 @@ abstract class BaseResource<T extends ResourceModel, K> {
     return null;
   }
 
-  Future<T> updateData(K key, T value) async {
+  Future<T> updateData(String key, T value) async {
     final existing = await findOneDoc(key: key);
-    if (existing is ResourceDoc<T, K>) {
+    if (existing is ResourceDoc<T>) {
       final box = await boxReady;
       existing.record = value;
       existing.status = DocStatus.updated;
