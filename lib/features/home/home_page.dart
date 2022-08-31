@@ -1,8 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:public_tourism/common/constants.dart';
-//import 'package:public_tourism/common/models/post_model.dart';
-//import 'package:public_tourism/resource/post_resource.dart';
 import 'package:public_tourism/widget/latest_post.dart';
 import 'package:public_tourism/widget/most_heart_widget.dart';
 
@@ -27,19 +24,19 @@ class _HomePageState extends State<HomePage> {
 
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text(
+          children: [
+            const Text(
               'Headline',
               style: TextStyle(fontSize: 18),
             ),
             SizedBox(
               height: 200.0,
               child: ListView.builder(
-                physics: ClampingScrollPhysics(),
+                physics: const ClampingScrollPhysics(),
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
                 itemCount: 15,
-                itemBuilder: (BuildContext context, int index) => Card(
+                itemBuilder: (BuildContext context, int index) => const Card(
                   color: Color.fromARGB(255, 7, 0, 37),
                   child: MostHeart(),
                 ),
@@ -75,7 +72,7 @@ class _HomePageState extends State<HomePage> {
               },
               icon: const Icon(Icons.person))
         ],
-      );
+      )
     );
   }
 }
