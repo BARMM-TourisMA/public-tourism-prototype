@@ -55,7 +55,7 @@ class PostModel extends ResourceModel {
       category: json['category'] is String ? json['category'] : '',
       hearts: (json['hearts'] is int) ? json['hearts'] : 0,
       attachments:
-          json['attachments'] is List<String> ? json['attachments'] : null,
+          json['attachments'] is List ? List<String>.from(json['attachments']) : null,
       dateCreated: ((json['dateCreated'] ?? '').isNotEmpty)
           ? formater.parse(json['dateCreated'])
           : null,
