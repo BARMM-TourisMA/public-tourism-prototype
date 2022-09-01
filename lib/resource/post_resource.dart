@@ -54,7 +54,7 @@ class PostResource extends BaseResource<PostModel, int> {
 
         final post = PostModel.fromJson(data);
         final copy = post.copyWith(key: doc.id);
-        setRecord(copy);
+        //setRecord(copy);
         return copy;
       }).toList();
       yield list;
