@@ -10,12 +10,13 @@ import 'package:public_tourism/routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   // ignore: constant_identifier_names
-  const bool USE_EMULATOR = String.fromEnvironment('DEV_MODE', defaultValue: '') == 'true';
+  const bool USE_EMULATOR =
+      String.fromEnvironment('DEV_MODE', defaultValue: '') == 'true';
 
   if (kIsWeb && USE_EMULATOR) {
     // [Firestore | localhost:8090]
@@ -24,14 +25,14 @@ void main() async {
       sslEnabled: false,
       persistenceEnabled: false,
     );
-    
+
     //[Authentication | localhost:9099]
     await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
 
     //[Storage | localhost:9199]
     await FirebaseStorage.instance.useStorageEmulator(
-       'localhost',
-       9199,
+      'localhost',
+      9199,
     );
   }
 
@@ -44,15 +45,11 @@ class PublicTourismApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      
       title: 'Public Tourism App',
-      theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
-        fontFamily: "Raleway"
-      ),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(primarySwatch: Colors.blueGrey, fontFamily: "Raleway"),
       initialRoute: AppContants.startUpRoute,
       routes: appRoutes,
     );
   }
 }
-
