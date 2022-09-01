@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:public_tourism/common/constants.dart';
 import 'package:public_tourism/features/contributor/contributor_page.dart';
 import 'package:public_tourism/features/contributor/post_page.dart';
+import 'package:public_tourism/features/details_page/details_page.dart';
 import 'package:public_tourism/features/home/home_page.dart';
 import 'package:public_tourism/features/log_in/log_in_page.dart';
 import 'package:public_tourism/features/sign_up/sign_up_page.dart';
@@ -13,6 +14,7 @@ Map<String, Widget Function(BuildContext)> appRoutes = {
     AppContants.homeRoute: (context) => const HomePage(),
     AppContants.contributorRoute: (context) => const ContributorPage(),
     AppContants.postRoute: (context) => const PostPage(),
+    AppContants.detailsRoute: (context) => const ContentDetailsPage(),
     AppContants.signUpRoute: (context) => const SignUpPage(),
     AppContants.loginRoute: (context) => const LogInPage()
  };

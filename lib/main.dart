@@ -5,18 +5,21 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:public_tourism/common/constants.dart';
+import 'package:public_tourism/features/home/home_page.dart';
 import 'package:public_tourism/common/sign_in_functions.dart';
 import 'package:public_tourism/firebase_options.dart';
 import 'package:public_tourism/routes.dart';
+import 'package:public_tourism/widget/latest_post.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   // ignore: constant_identifier_names
-  const bool USE_EMULATOR = String.fromEnvironment('DEV_MODE', defaultValue: '') == 'true';
+  const bool USE_EMULATOR =
+      String.fromEnvironment('DEV_MODE', defaultValue: '') == 'true';
 
   if (kIsWeb && USE_EMULATOR) {
     // [Firestore | localhost:8090]
@@ -25,14 +28,14 @@ void main() async {
       sslEnabled: false,
       persistenceEnabled: false,
     );
-    
+
     //[Authentication | localhost:9099]
     await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
 
     //[Storage | localhost:9199]
     await FirebaseStorage.instance.useStorageEmulator(
-       'localhost',
-       9199,
+      'localhost',
+      9199,
     );
   }
   await authorizeUser();
@@ -46,13 +49,10 @@ class PublicTourismApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Public Tourism App',
-      theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
-        fontFamily: "Raleway"
-      ),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(primarySwatch: Colors.blueGrey, fontFamily: "Raleway"),
       initialRoute: AppContants.startUpRoute,
       routes: appRoutes,
     );
   }
 }
-
