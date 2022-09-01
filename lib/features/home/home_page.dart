@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:public_tourism/common/constants.dart';
 import 'package:public_tourism/common/widgets/post_heartitem.dart';
-import 'package:public_tourism/common/widgets/tour_button.dart';
 import 'package:public_tourism/widget/latest_post.dart';
 //import 'package:public_tourism/widget/most_heart_widget.dart';
 
 import '../../common/models/post_model.dart';
-import '../../common/widgets/app_bar.dart';
-//import '../../common/widgets/post_heartitem.dart';
 import '../../common/widgets/appbar_user.dart';
-import '../../common/widgets/post_item.dart';
 import '../../resource/post_resource.dart';
 
 class HomePage extends StatefulWidget {
@@ -42,31 +38,12 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Container(
                     padding: const EdgeInsets.only(left: 10, bottom: 10),
-                    margin: const EdgeInsets.only(top: 6),
-                    alignment: Alignment.bottomLeft,
-                    child: Text(
-                      'Bringing BARMM to the realm of digital travelers',
-                      style: AppContants.defaultTextStyle,
-                    ),
-                  ),
-                  
-                  // TourButton(
-
-                  //       //color: AppContants.textFieldColor,
-                  //       //icon: Icons.add_location_outlined,
-                  //       label: "Create Post",
-                  //       onPressed: () {
-                  //         Navigator.pushNamed(context, AppContants.postRoute);
-                  //       },
-                  //     ),
-                  Container(
-                    padding: const EdgeInsets.only(left: 10, bottom: 10),
                     margin: const EdgeInsets.only(top: 3),
                     alignment: Alignment.bottomLeft,
                     child: Text('Most heart posts',
-                        style: AppContants.defaultTextStyle),
+                        style: AppContants.defaultTextStyle,
+                        textDirection: TextDirection.ltr),
                   ),
-
                   InkWell(
                     onTap: () {},
                     child: SizedBox(
@@ -92,7 +69,10 @@ class _HomePageState extends State<HomePage> {
                             );
                           } else {
                             return const Center(
-                              child: Text("No post available"),
+                              child: Text(
+                                "No post available",
+                                textDirection: TextDirection.rtl,
+                              ),
                             );
                           }
                         },
@@ -101,8 +81,6 @@ class _HomePageState extends State<HomePage> {
                       //color: Color.fromARGB(255, 7, 0, 37),
                     ),
                   ),
-
-                  
                 ],
               ),
               Container(
@@ -150,6 +128,7 @@ class _HomePageState extends State<HomePage> {
                 },
                 icon: const Icon(Icons.person))
           ],
-        ));
+        ),
+        );
   }
 }

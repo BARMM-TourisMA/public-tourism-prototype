@@ -100,7 +100,7 @@ class _ContributorPageState extends State<ContributorPage> {
                                   );
                                 } else {
                                   return const Center(
-                                      child: Text("No Place available"));
+                                      child: Text("No post available",textDirection: TextDirection.rtl,),);
                                 }
                               },
                             ),
@@ -148,7 +148,7 @@ class _ContributorPageState extends State<ContributorPage> {
                       );
                     } else {
                       return const Center(
-                        child: Text("No post available"),
+                        child: Text("No post available",textDirection: TextDirection.rtl,),
                       );
                     }
                   },

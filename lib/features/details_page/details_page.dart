@@ -1,7 +1,14 @@
-import 'dart:math';
+//import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:public_tourism/common/models/post_model.dart';
+
+import '../../common/constants.dart';
+import '../../common/widgets/appbar_user.dart';
+import '../../common/widgets/post_heartitem.dart';
+import '../../common/widgets/scroll_details.dart';
+import '../../resource/post_resource.dart';
+//mport 'package:flutter/src/foundation/key.dart';
+//import 'package:flutter/src/widgets/framework.dart';
 
 class ContentDetailsPage extends StatefulWidget {
   const ContentDetailsPage({Key? key}) : super(key: key);
@@ -11,72 +18,40 @@ class ContentDetailsPage extends StatefulWidget {
 }
 
 class _ContentDetailsPageState extends State<ContentDetailsPage> {
+  late PostModel? post;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color(0xFF011530),
+        appBar: BuildUser("TouristMA"),
+        backgroundColor: const Color(0xFF011530),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
+              SizedBox(
+                height: 2,
+                child: Container(
+                  color: Colors.white,
+                  margin: const EdgeInsets.only(left: 10, right: 10),
+                ),
+              ),
               Column(
                 children: [
-                  Row(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          color: Colors.cyan,
-                        ),
-                        height: 50,
-                        width: 50,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text(
-                            'Welcome',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                          Text(
-                            'TouristMA',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24,
-                            ),
-                          ),
-                          Text(
-                            'Bringing BARMM to the realm of digital travelers',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 1,
-                    child: Container(
-                      color: Colors.white,
-                    ),
-                  ),
                   Column(
                     children: [
                       Container(
                         margin: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: Colors.cyan,
-                        ),
+                            borderRadius: BorderRadius.circular(30),
+                            color: Colors.yellow,
+                            image: DecorationImage(
+                                image: Image.asset('../assets/tandu.jpg').image,
+                                fit: BoxFit.cover)
+                            //child
+                            ),
                         height: 180,
                         width: 450,
-                        //child
                       ),
                       Row(
                         children: [
@@ -101,32 +76,73 @@ class _ContentDetailsPageState extends State<ContentDetailsPage> {
                           ),
                         ],
                       ),
-                      Container(
-                        padding: EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: Colors.cyan,
-                        ),
-                        height: 56,
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: [
-                              for (int i = 0; i < 11; i++) ...[
-                                Container(
-                                  margin: const EdgeInsets.all(2),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(4),
-                                    color: Color(0xFF011530),
-                                  ),
-                                  height: 50,
-                                  width: 50,
-                                )
-                              ],
-                            ],
-                          ),
-                        ),
+
+
+
+                       SingleChildScrollView(
+          child: Column(
+            children: [
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  
+                  InkWell(
+                    onTap: () {},
+                    child: SizedBox(
+                      
+                      height: 70.0,
+                      child: StreamBuilder(
+                        stream: PostResource.store.stream(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<List<PostModel>> snapshot) {
+                          if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                            return ListView.builder(
+                              itemCount: snapshot.data!.length,
+                              physics: const ClampingScrollPhysics(),
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                final post = snapshot.data![index];
+                                return scroll_details(
+                                  imagesheart: post.attachments ?? [],
+                                  titleheart: post.title ?? 'No Title',
+                                  heartCount1: post.hearts ?? 0,
+                                );
+                              },
+                            );
+                          } else {
+                            return const Center(
+                              child: Text(
+                                "No post available",
+                                textDirection: TextDirection.rtl,
+                              ),
+                            );
+                          }
+                        },
                       ),
+
+                      //color: Color.fromARGB(255, 7, 0, 37),
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                padding: const EdgeInsets.only(left: 20, bottom: 20),
+                child: SizedBox(
+                  height: 2,
+                  child: Container(
+                    color: Colors.white,
+                    margin: const EdgeInsets.only(left: 10, right: 10),
+                  ),
+                ),
+              ),
+              
+              
+            ],
+          ),
+        ),
+                    
                     ],
                   ),
                 ],
@@ -145,7 +161,7 @@ class _ContentDetailsPageState extends State<ContentDetailsPage> {
                         ),
                         height: 50,
                         child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
+                          //scrollDirection: Axis.horizontal,
                           child: Row(
                             children: [
                               Row(
