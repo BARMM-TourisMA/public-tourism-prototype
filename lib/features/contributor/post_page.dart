@@ -2,16 +2,20 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_picker_web/image_picker_web.dart';
 import 'package:public_tourism/common/constants.dart';
+import 'package:public_tourism/common/models/location_model.dart';
 import 'package:public_tourism/common/models/post_model.dart';
 import 'package:public_tourism/common/models/upload_progress_model.dart';
 import 'package:public_tourism/common/widgets/tour_button.dart';
+import 'package:public_tourism/resource/location_resource.dart';
 
 import '../../common/widgets/app_bar.dart';
+import 'floating_modal.dart';
 
 class PostPage extends StatefulWidget {
   final PostModel? post;
@@ -31,7 +35,9 @@ class _PostPageState extends State<PostPage> {
   final _formKey = GlobalKey<FormState>();
   final List<UploadProgressModel<dynamic>> _images = [];
   late FocusNode descFocusNode;
+  String selectedCategory = "";
   bool isBusy = false;
+  LocationModel? selectedLoc;
 
   @override
   void initState() {
@@ -69,6 +75,8 @@ class _PostPageState extends State<PostPage> {
     });
     final post = PostModel(
         title: _titleCtrl.text,
+        location: selectedLoc?.id ?? '',
+        category: selectedCategory,
         description: _descriptionCtrl.text,
         attachments: []);
     var doc = await postCollection.add(post.toMap());
@@ -80,16 +88,15 @@ class _PostPageState extends State<PostPage> {
       late Reference snapshot;
       if (kIsWeb) {
         final info = progress.data;
-        snapshot =
-            storeInstance.ref().child('images/${doc.id}/${info.name}');
+        snapshot = storeInstance.ref().child('images/${doc.id}/${info.name}');
         task = snapshot.putBlob(
-            info.slice(), SettableMetadata(contentType: info.type));        
+            info.slice(), SettableMetadata(contentType: info.type));
       } else {
         final xfile = progress.data as XFile;
-        snapshot =
-            storeInstance.ref().child('images/${doc.id}/${xfile.name}');
+        snapshot = storeInstance.ref().child('images/${doc.id}/${xfile.name}');
         final bytes = await xfile.readAsBytes();
-        task = snapshot.putData(bytes, SettableMetadata(contentType: xfile.mimeType));
+        task = snapshot.putData(
+            bytes, SettableMetadata(contentType: xfile.mimeType));
       }
       task.snapshotEvents.listen((snap) {
         double value =
@@ -148,13 +155,37 @@ class _PostPageState extends State<PostPage> {
               ),
             Container(
               margin: const EdgeInsets.all(2.5),
-              decoration: BoxDecoration(color: AppContants.secondaryColor, borderRadius: BorderRadius.circular(5)),
+              decoration: BoxDecoration(
+                  color: AppContants.secondaryColor,
+                  borderRadius: BorderRadius.circular(5)),
               child: Text(
                 "${item.title} ${isBusy ? '${(100 * item.progress).round()}%' : ''}",
                 style: AppContants.defaultTextStyle,
               ),
             )
           ],
+        ],
+      ),
+    );
+  }
+
+  Widget buildLocationOption(
+      {required String label, required Image image, VoidCallback? onPressed}) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Column(
+        children: [
+          CircleAvatar(
+            radius: 40,
+            backgroundImage: image.image,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            label,
+            //style: AppContants.defaultTextStyle,
+          )
         ],
       ),
     );
@@ -174,6 +205,79 @@ class _PostPageState extends State<PostPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      StreamBuilder<List<LocationModel>>(
+                        stream: LocationResource.store.stream(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<List<LocationModel>> snapshot) {
+                          if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                            return PopupMenuButton<LocationModel?>(
+                              constraints: const BoxConstraints(minWidth: 600),
+                              child: TourButton(
+                                label: selectedLoc == null
+                                    ? "Select Location"
+                                    : selectedLoc?.title ?? "No Title",
+                                textColor:
+                                    selectedLoc == null ? null : Colors.black,
+                                color: AppContants.textFieldColor,
+                              ),
+                              itemBuilder: (BuildContext context) =>
+                                  <PopupMenuEntry<LocationModel?>>[
+                                ...snapshot.data!.map((e) {
+                                  return PopupMenuItem(
+                                    value: e,
+                                    onTap: (() {
+                                      setState(() {
+                                        selectedLoc = e;
+                                      });
+                                    }),
+                                    child: ListTile(
+                                      leading: CircleAvatar(
+                                        backgroundImage: e.image != null
+                                            ? Image.network(e.image!).image
+                                            : null,
+                                      ),
+                                      title: Text(e.title ?? 'No Title'),
+                                      trailing:
+                                          const Icon(Icons.arrow_right_sharp),
+                                    ),
+                                  );
+                                }),
+                              ],
+                            );
+                          } else {
+                            return const TourButton(label: "No Avalailable Places",);
+                          }
+                        },
+                      ),
+                      PopupMenuButton<String>(
+                        constraints: const BoxConstraints(minWidth: 600),
+                        child: TourButton(
+                          label: selectedCategory == ""
+                              ? "Select Category"
+                              : selectedCategory,
+                          textColor:
+                              selectedCategory == "" ? null : Colors.black,
+                          color: AppContants.textFieldColor,
+                        ),
+                        itemBuilder: (BuildContext context) =>
+                            <PopupMenuEntry<String>>[
+                          ...AppContants.postCategories.map((e) {
+                            return PopupMenuItem(
+                              value: e,
+                              onTap: (() {
+                                setState(() {
+                                  selectedCategory = e;
+                                });
+                              }),
+                              child: ListTile(
+                                leading: const Icon(Icons.arrow_right_sharp),
+                                title: Text(e),
+                                trailing: const Icon(Icons.category),
+                              ),
+                            );
+                          }),
+                        ],
+                      ),
                       Text(
                         "New Article",
                         style: TextStyle(
@@ -232,7 +336,10 @@ class _PostPageState extends State<PostPage> {
                           return null;
                         },
                       ),
-                      Expanded(child: SingleChildScrollView(child: progress,)),
+                      Expanded(
+                          child: SingleChildScrollView(
+                        child: progress,
+                      )),
                     ],
                   ),
                 )),
