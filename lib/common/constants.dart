@@ -10,6 +10,7 @@ class AppContants {
   static String startUpRoute = "/start";
   static String contributorRoute = "/contributor";
   static String postRoute = "/post";
+  static String detailsRoute = "/details";
   static String locationRoute = "/location";
 
   //colors

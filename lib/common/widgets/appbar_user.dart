@@ -32,12 +32,12 @@ PreferredSizeWidget BuildUser(String userName) {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    const Text("Welcome",
+                    const Text("Welcome to",
                         style: TextStyle(color: Colors.grey, fontSize: 14)),
-                    Text(
-                      userName,
-                      style: AppContants.defaultTextStyle,
-                    ),
+                    Text("TouristMA"),
+                    Text("Bringing BARMM to the realm of digital travellers.",
+                        style: TextStyle(color: Colors.grey, fontSize: 12)),
+                    
                   ],
                 ),
               ],

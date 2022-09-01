@@ -38,7 +38,7 @@ void main() async {
     );
   }
 
-  runApp(const HomePage());
+  runApp(const PublicTourismApp());
 }
 
 class PublicTourismApp extends StatelessWidget {
