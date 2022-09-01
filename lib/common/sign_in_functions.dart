@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:public_tourism/common/constants.dart';
 
 import 'models/auth_user_model.dart';
 

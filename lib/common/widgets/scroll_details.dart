@@ -1,15 +1,14 @@
 //import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
 
-class scroll_details extends StatelessWidget {
+class ScrollDetails extends StatelessWidget {
   final String titleheart;
 
   final List<String> imagesheart;
   final int heartCount1;
 
-  const scroll_details(
+  const ScrollDetails(
       {Key? key,
       required this.titleheart,
       required this.imagesheart,

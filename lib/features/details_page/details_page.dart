@@ -1,10 +1,9 @@
 //import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:public_tourism/common/constants.dart';
 import 'package:public_tourism/common/models/post_model.dart';
 
-import '../../common/constants.dart';
 import '../../common/widgets/appbar_user.dart';
-import '../../common/widgets/post_heartitem.dart';
 import '../../common/widgets/scroll_details.dart';
 import '../../resource/post_resource.dart';
 //mport 'package:flutter/src/foundation/key.dart';
@@ -58,7 +57,7 @@ class _ContentDetailsPageState extends State<ContentDetailsPage> {
                           Container(
                             margin: const EdgeInsets.only(
                                 top: 0, bottom: 4, right: 4, left: 4),
-                            child: Text(
+                            child: const Text(
                               'Related Pictures and Videos',
                               style: TextStyle(
                                 color: Colors.white,
@@ -104,7 +103,7 @@ class _ContentDetailsPageState extends State<ContentDetailsPage> {
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) {
                                 final post = snapshot.data![index];
-                                return scroll_details(
+                                return ScrollDetails(
                                   imagesheart: post.attachments ?? [],
                                   titleheart: post.title ?? 'No Title',
                                   heartCount1: post.hearts ?? 0,
@@ -170,7 +169,7 @@ class _ContentDetailsPageState extends State<ContentDetailsPage> {
                                     margin: const EdgeInsets.all(2),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(4),
-                                      color: Color(0xFF011530),
+                                      color: AppContants.backgroundColor,
                                     ),
                                     height: 40,
                                     width: 40,
@@ -178,7 +177,7 @@ class _ContentDetailsPageState extends State<ContentDetailsPage> {
                                   Container(
                                     margin: const EdgeInsets.only(
                                         top: 0, bottom: 0, right: 38, left: 4),
-                                    child: Text(
+                                    child: const Text(
                                       'Booking',
                                       style: TextStyle(
                                         fontSize: 12,
@@ -194,7 +193,7 @@ class _ContentDetailsPageState extends State<ContentDetailsPage> {
                                     margin: const EdgeInsets.all(2),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(4),
-                                      color: Color(0xFF011530),
+                                      color: AppContants.backgroundColor,
                                     ),
                                     height: 40,
                                     width: 40,
@@ -202,7 +201,7 @@ class _ContentDetailsPageState extends State<ContentDetailsPage> {
                                   Container(
                                     margin: const EdgeInsets.only(
                                         top: 0, bottom: 0, right: 38, left: 4),
-                                    child: Text(
+                                    child: const Text(
                                       'Route Place',
                                       style: TextStyle(
                                         fontSize: 12,
@@ -218,7 +217,7 @@ class _ContentDetailsPageState extends State<ContentDetailsPage> {
                                     margin: const EdgeInsets.all(2),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(4),
-                                      color: Color(0xFF011530),
+                                      color: AppContants.backgroundColor,
                                     ),
                                     height: 40,
                                     width: 40,
@@ -226,7 +225,7 @@ class _ContentDetailsPageState extends State<ContentDetailsPage> {
                                   Container(
                                     margin: const EdgeInsets.only(
                                         top: 0, bottom: 0, right: 38, left: 4),
-                                    child: Text(
+                                    child: const Text(
                                       'Share Experience',
                                       style: TextStyle(
                                         fontSize: 12,
@@ -256,7 +255,7 @@ class _ContentDetailsPageState extends State<ContentDetailsPage> {
                                 children: [
                                   Container(
                                     margin: const EdgeInsets.all(8),
-                                    child: Text(
+                                    child: const Text(
                                       "Description",
                                       style: TextStyle(
                                         color: Colors.white,
@@ -269,8 +268,9 @@ class _ContentDetailsPageState extends State<ContentDetailsPage> {
                                     alignment: Alignment.topLeft,
                                     padding: const EdgeInsets.all(4),
                                     margin: const EdgeInsets.all(4),
+                                    width: 460,
                                     child: Row(
-                                      children: [
+                                      children: const [
                                         Expanded(
                                           child: Text(
                                             "The establishment of Bangsamoro was the culmination of several years of peace talks between the Philippine government and several autonomist groups; in particular the Moro Islamic Liberation Front (MILF), which rejected the validity of the ARMM and called for the creation of a region with more powers devolved from the national government. A framework agreement known as the Comprehensive Agreement on the Bangsamoro was negotiated between the Benigno Aquino III administration and the MILF in 2014. After continued negotiations and debates over certain provisions, the Congress of the Philippines created and ratified a basic law for the region, now referred to as the Bangsamoro Organic Law; the bill was signed into law by President Rodrigo Duterte on July 26, 2018. Despite questions on the region's constitutionality, as it would have adopted a parliamentary system in an area of a country with a presidential system of government, no judicial ruling was made against the organic law and consequently the COMELEC held two-part plebiscite: one by ARMM citizens determining whether to dissolve the ARMM and immediately replace it with the Bangsamoro and, following the victory of the yes vote on the first part,[8][9][10] and the second part taken by neighboring municipalities and barangays in the provinces of Lanao del Norte and Cotabato regarding their cession to the Bangsamoro region.[11][12][13][14] As a result of the second part of the plebiscite, 63 barangays of Cotabato province were handed over to the Bangsamoro government, adding to the autonomous region's territory.",
@@ -283,7 +283,6 @@ class _ContentDetailsPageState extends State<ContentDetailsPage> {
                                         ),
                                       ],
                                     ),
-                                    width: 460,
                                   ),
                                 ],
                               ),

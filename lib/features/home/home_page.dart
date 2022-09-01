@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:public_tourism/common/constants.dart';
-import 'package:public_tourism/common/sign_in_functions.dart';
-import 'package:public_tourism/common/widgets/app_bar.dart';
 import 'package:public_tourism/common/widgets/post_heartitem.dart';
 import 'package:public_tourism/widget/latest_post.dart';
 //import 'package:public_tourism/widget/most_heart_widget.dart';
