@@ -47,7 +47,7 @@ class LatestPost extends StatelessWidget {
                         );
                       } else {
                         return const Center(
-                          child: Text("No post available"),
+                          child: Text("No post available",textDirection: TextDirection.rtl,),
                         );
                       }
                     },
@@ -58,7 +58,7 @@ class LatestPost extends StatelessWidget {
           );
         } else {
           return const Center(
-            child: Text("No post available"),
+            child: Text("No post available",textDirection: TextDirection.rtl,),
           );
         }
       },

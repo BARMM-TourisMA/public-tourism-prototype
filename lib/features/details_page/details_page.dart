@@ -1,7 +1,7 @@
-import 'dart:math';
+//import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+//mport 'package:flutter/src/foundation/key.dart';
+//import 'package:flutter/src/widgets/framework.dart';
 
 class ContentDetailsPage extends StatefulWidget {
   const ContentDetailsPage({Key? key}) : super(key: key);
@@ -15,7 +15,7 @@ class _ContentDetailsPageState extends State<ContentDetailsPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color(0xFF011530),
+        backgroundColor: const Color(0xFF011530),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -145,7 +145,7 @@ class _ContentDetailsPageState extends State<ContentDetailsPage> {
                         ),
                         height: 50,
                         child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
+                          //scrollDirection: Axis.horizontal,
                           child: Row(
                             children: [
                               Row(

@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:public_tourism/common/constants.dart';
+import 'package:public_tourism/features/home/home_page.dart';
 import 'package:public_tourism/firebase_options.dart';
 import 'package:public_tourism/routes.dart';
 import 'package:public_tourism/widget/latest_post.dart';
@@ -37,7 +38,7 @@ void main() async {
     );
   }
 
-  runApp(const LatestPost());
+  runApp(const HomePage());
 }
 
 class PublicTourismApp extends StatelessWidget {
