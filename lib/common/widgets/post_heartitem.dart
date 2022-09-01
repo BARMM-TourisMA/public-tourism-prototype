@@ -24,6 +24,15 @@ class HeartItem extends StatelessWidget {
       padding: const EdgeInsets.all(6),
       height: 200,
       width: 130,
+      decoration: BoxDecoration(
+        //border: Border.all(width: 1),
+        borderRadius: BorderRadius.circular(20),
+        image: imagesheart.isNotEmpty
+            ? DecorationImage(
+                image: Image.network(imagesheart.first).image,
+                fit: BoxFit.cover)
+            : null,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -41,15 +50,6 @@ class HeartItem extends StatelessWidget {
                 ].toList()),
           )
         ],
-      ),
-      decoration: BoxDecoration(
-        //border: Border.all(width: 1),
-        borderRadius: BorderRadius.circular(20),
-        image: imagesheart.isNotEmpty
-            ? DecorationImage(
-                image: Image.network(imagesheart.first).image,
-                fit: BoxFit.cover)
-            : null,
       ),
     );
   }

@@ -1,7 +1,13 @@
-import 'package:flutter/cupertino.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:public_tourism/common/constants.dart';
+import 'package:public_tourism/common/models/location_model.dart';
+import 'package:public_tourism/common/sign_in_functions.dart';
+import 'package:public_tourism/common/widgets/app_bar.dart';
+import 'package:public_tourism/common/widgets/tour_button.dart';
+import 'package:public_tourism/resource/location_resource.dart';
+
+import '../../common/text_field_decoration.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -11,180 +17,330 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  //
-  bool checkBox1isChecked = false;
-  bool checkBox2isChecked = false;
-  //
+  final TextEditingController _firstNameCtrl = TextEditingController();
+  final TextEditingController _lastNameCtrl = TextEditingController();
+  final TextEditingController _emailCtrl = TextEditingController();
+  final TextEditingController _passwordCtrl = TextEditingController();
+  final TextEditingController _confirmPasswordCtrl = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  late FocusNode _lastNameFocusNode;
+  late FocusNode _emailFocusNode;
+  late FocusNode _passwordFocusNode;
+  late FocusNode _confirmPasswordFocusNode;
+
+  String userType = "Explorer";
+
+  @override
+  void initState() {
+    super.initState();
+    _lastNameFocusNode = FocusNode();
+    _emailFocusNode = FocusNode();
+    _passwordFocusNode = FocusNode();
+    _confirmPasswordFocusNode = FocusNode();
+  }
+
+  void _submitRegistration(BuildContext context) {
+    if (!_formKey.currentState!.validate()) return;
+    signUpWithEmailAndPass(
+            email: _emailCtrl.text,
+            password: _passwordCtrl.text,
+            displayName: "${_lastNameCtrl.text}, ${_firstNameCtrl.text}")
+        .catchError((e) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Row(
+                children: const [
+                  Icon(
+                    Icons.error,
+                    color: Colors.red,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text("Error"),
+                ],
+              ),
+              content: Flex(
+                direction: Axis.vertical,
+                children: [
+                  const Text("Failed to register"),
+                  Text("$e"),
+                ],
+              ),
+              backgroundColor: AppContants.secondaryColor,
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text("OK"))
+              ],
+            );
+          });
+    }).then((value) {
+      Navigator.pushReplacementNamed(context, AppContants.startUpRoute);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final textWithShadow = AppContants.defaultTextStyle.copyWith(
+        color: AppContants.textColor,
+        shadows: [
+          const BoxShadow(
+              color: Colors.black, blurRadius: 2, offset: Offset(2.5, 2.5))
+        ].toList());
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color(0xFF011530),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(
-              height: 16,
-            ),
-            Container(
-              margin: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                color: Colors.white,
-              ),
-              height: 200,
-            ),
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(4),
-              ),
-              child: TextField(
-                decoration: const InputDecoration(
-                  hintText: 'First Name',
-                ),
-              ),
-              height: 40,
-              width: 350,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(4),
-              ),
-              child: TextField(
-                decoration: const InputDecoration(
-                  hintText: 'Last Name',
-                ),
-              ),
-              height: 40,
-              width: 350,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(4),
-              ),
-              child: TextField(
-                decoration: const InputDecoration(
-                  hintText: 'Username',
-                ),
-              ),
-              height: 40,
-              width: 350,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(4),
-              ),
-              child: TextField(
-                decoration: const InputDecoration(
-                  hintText: 'Password',
-                ),
-              ),
-              height: 40,
-              width: 350,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(
-                          top: 8, bottom: 25, right: 2.5, left: 2.5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4),
-                        color: Colors.white,
+        backgroundColor: AppContants.backgroundColor,
+        appBar: buildAppBar(""),
+        body: SingleChildScrollView(
+          child: Stack(
+            children: [
+              StreamBuilder<List<LocationModel>>(
+                stream: LocationResource.store.stream(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<LocationModel>> snapshot) {
+                  if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                    return CarouselSlider(
+                      options: CarouselOptions(
+                        height: MediaQuery.of(context).size.height,
+                        viewportFraction: 1,
+                        autoPlay: true,
                       ),
-                      height: 40,
-                      width: 150,
-                      child: Row(
+                      items: snapshot.data!.map((item) {
+                        return Builder(
+                          builder: (BuildContext context) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: Image.network(item.image!).image)),
+                            );
+                          },
+                        );
+                      }).toList(),
+                    );
+                  } else {
+                    return Container(
+                      color: AppContants.backgroundColor,
+                    );
+                  }
+                },
+              ),
+              Container(
+                color: const Color.fromARGB(151, 0, 0, 0),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Container(
+                        margin: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: Image.asset('../assets/wide-logo.png')
+                                    .image)),
+                        height: 200,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          children: [
+                            Text(
+                              "Personal Information:",
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppContants.textColor),
+                            ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            TextFormField(
+                              controller: _firstNameCtrl,
+                              style: AppContants.defaultTextStyle,
+                              decoration: buildTextFieldDecorator(
+                                hintText: 'First Name',
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'First is required';
+                                }
+                                return null;
+                              },
+                              onFieldSubmitted: (value) {
+                                if (value.isNotEmpty) {
+                                  _lastNameFocusNode.requestFocus();
+                                }
+                              },
+                            ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            TextFormField(
+                              controller: _lastNameCtrl,
+                              focusNode: _lastNameFocusNode,
+                              style: AppContants.defaultTextStyle,
+                              decoration: buildTextFieldDecorator(
+                                hintText: 'Last Name',
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Last name is required';
+                                }
+                                return null;
+                              },
+                              onFieldSubmitted: (value) {
+                                if (value.isNotEmpty) {
+                                  _emailFocusNode.requestFocus();
+                                }
+                              },
+                            ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              "User Account:",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  color: AppContants.textColor),
+                            ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            TextFormField(
+                              controller: _emailCtrl,
+                              focusNode: _emailFocusNode,
+                              style: AppContants.defaultTextStyle,
+                              decoration: buildTextFieldDecorator(
+                                hintText: 'eMail',
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'eMail is required';
+                                }
+                                return null;
+                              },
+                              onFieldSubmitted: (value) {
+                                if (value.isNotEmpty) {
+                                  _passwordFocusNode.requestFocus();
+                                }
+                              },
+                            ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            TextFormField(
+                              controller: _passwordCtrl,
+                              focusNode: _passwordFocusNode,
+                              obscureText: true,
+                              style: AppContants.defaultTextStyle,
+                              decoration: buildTextFieldDecorator(
+                                hintText: 'Password',
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Password is required';
+                                }
+                                return null;
+                              },
+                              onFieldSubmitted: (value) {
+                                if (value.isNotEmpty) {
+                                  _confirmPasswordFocusNode.requestFocus();
+                                }
+                              },
+                            ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            TextFormField(
+                              controller: _confirmPasswordCtrl,
+                              focusNode: _confirmPasswordFocusNode,
+                              obscureText: true,
+                              style: AppContants.defaultTextStyle,
+                              onFieldSubmitted: (value) {
+                                if (value.isNotEmpty) {
+                                  _submitRegistration(context);
+                                }
+                              },
+                              decoration: buildTextFieldDecorator(
+                                hintText: 'Confirm Password',
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Confirm Password is required';
+                                } else if (value != _passwordCtrl.text) {
+                                  return 'Password does not matched';
+                                }
+                                return null;
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Checkbox(
-                            value: checkBox1isChecked,
-                            onChanged: (bool? value) {
-                              setState(() {
-                                checkBox1isChecked = value!;
-                              });
-                            },
-                          ),
-                          Center(
-                            child: Text('Explorer'),
+                          Container(
+                            padding: const EdgeInsets.all(8),
+                            margin: const EdgeInsets.all(5),
+                            height: 40,
+                            child: Row(
+                              children: [
+                                Radio<String>(
+                                  value: "Explorer",
+                                  groupValue: userType,
+                                  onChanged: (String? value) {
+                                    setState(() {
+                                      userType = value!;
+                                    });
+                                  },
+                                ),
+                                Center(
+                                  child: Text(
+                                    'Explorer',
+                                    style: textWithShadow,
+                                  ),
+                                ),
+                                Radio<String>(
+                                  value: "Contributor",
+                                  groupValue: userType,
+                                  onChanged: (String? value) {
+                                    setState(() {
+                                      userType = value!;
+                                    });
+                                  },
+                                ),
+                                Center(
+                                  child: Text(
+                                    'Contributor',
+                                    style: textWithShadow,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(
-                          top: 8, bottom: 25, right: 2.5, left: 2.5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4),
-                        color: Colors.white,
+                      TourButton(
+                        label: "SIGN UP",
+                        color: AppContants.textFieldColor,
+                        onPressed: () => _submitRegistration(context),
                       ),
-                      height: 40,
-                      width: 150,
-                      child: Row(
-                        children: [
-                          Checkbox(
-                            value: checkBox2isChecked,
-                            onChanged: (bool? value) {
-                              setState(() {
-                                checkBox2isChecked = value!;
-                              });
-                            },
-                          ),
-                          Center(
-                            child: Text('Contributor'),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            Center(
-                child: InkWell(
-              onTap: (() {
-                //
-              }),
-              child: Container(
-                width: 60,
-                decoration: BoxDecoration(
-                  color: Color(0xFF011530),
-                  borderRadius: BorderRadius.circular(25),
-                ),
-                child: Center(
-                  child: Text(
-                    'SIGN UP',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+                    ],
                   ),
                 ),
               ),
-            )),
-          ],
+            ],
+          ),
         ),
       ),
     );

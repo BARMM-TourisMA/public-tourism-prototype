@@ -1,9 +1,8 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:public_tourism/common/constants.dart';
+import 'package:public_tourism/common/widgets/tour_button.dart';
 
 class StartUpPage extends StatefulWidget {
   const StartUpPage({Key? key}) : super(key: key);
@@ -25,7 +24,7 @@ class _StartUpPageState extends State<StartUpPage> {
       }
     });
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,50 +53,15 @@ class _StartUpPageState extends State<StartUpPage> {
                 child: const Text('Explore Now'),
               )
             ] else ...[
-              ElevatedButton(
-                onPressed: () async {
-                  FirebaseAuth.instance.signInAnonymously();
+              TourButton(
+                icon: Icons.login,
+                color: AppContants.textFieldColor,
+                textColor: AppContants.secondaryColor,
+                onPressed: () {
+                  Navigator.pushNamed(context, AppContants.loginRoute);
                 },
-                child: const Text('Sign In Anonymously'),
+                label: 'Sign In',
               ),
-              const SizedBox(height: 8),
-              SignInButton(
-                Buttons.Google,
-                onPressed: () async {
-                  final GoogleSignInAccount? googleUser =
-                      await GoogleSignIn().signIn();
-                  // Obtain the auth details from the request.
-                  final GoogleSignInAuthentication? googleAuth =
-                      await googleUser?.authentication;
-
-                  // Create a new credential.
-                  final OAuthCredential googleCredential =
-                      GoogleAuthProvider.credential(
-                    accessToken: googleAuth!.accessToken,
-                    idToken: googleAuth.idToken,
-                  );
-
-                  // Sign in to Firebase with the Google [UserCredential].
-                  await FirebaseAuth.instance
-                      .signInWithCredential(googleCredential)
-                      .then((googleUserCredential) {
-                    if (googleUserCredential.user?.uid != null) {
-                      Navigator.pushReplacementNamed(
-                          context, AppContants.homeRoute);
-                    }
-                  });
-                },
-              ),
-              const SizedBox(height: 8),
-              SignInButton(
-                Buttons.FacebookNew,
-                onPressed: () {},
-              ),
-              const SizedBox(height: 8),
-              SignInButton(
-                Buttons.Twitter,
-                onPressed: () {},
-              )
             ]
           ],
         ),

@@ -31,6 +31,7 @@ class TourButton extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           child: Center(
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 if (loading == true)
                   SizedBox(
