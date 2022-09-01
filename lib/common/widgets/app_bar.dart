@@ -16,13 +16,38 @@ PreferredSizeWidget buildAppBar(String userName) {
               image: Image.asset('../../web/icons/icon-192.png').image)),
     ),
     title: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text("Welcome",
-            style: TextStyle(color: Colors.grey, fontSize: 14)),
-        Text(
-          userName,
-          style: AppContants.defaultTextStyle,
+        Wrap(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    const Text("Welcome",
+                        style: TextStyle(color: Colors.grey, fontSize: 14)),
+                    Text(
+                      userName,
+                      style: AppContants.defaultTextStyle,
+                    ),
+                  ],
+                ),
+              ],
+              //),
+              //  ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: const [
+                Text("TouristMA",
+                    style: TextStyle(
+                        color: Color.fromARGB(255, 247, 244, 244),
+                        fontSize: 20)),
+              ],
+            ),
+          ],
         ),
       ],
     ),
