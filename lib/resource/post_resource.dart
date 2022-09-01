@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:public_tourism/common/constants.dart';
 import 'package:public_tourism/common/models/post_model.dart';
 import 'package:public_tourism/resource/base.resource.dart';
@@ -43,26 +42,17 @@ class PostResource extends BaseResource<PostModel, int> {
   }
 
   @override
-  Stream<List<PostModel>> stream({Filter? filter}) async* {
-    final coll = FirebaseFirestore.instance.collection(collection);
-    final snapshot = coll.snapshots();
-    // final offline = await find(filter: filter);
-    // yield offline;
-    await for (QuerySnapshot q in snapshot) {
-      var list = q.docs.map((doc) {
-        final data = doc.data() as Map<String, dynamic>;
-
-        final post = PostModel.fromJson(data);
-        final copy = post.copyWith(key: doc.id);
-        //setRecord(copy);
-        return copy;
-      }).toList();
-      yield list;
-    }
+  PostModel fromMap(Filter filter) {
+    return PostModel.fromMap(filter);
   }
 
   @override
-  PostModel fromMap(Filter filter) {
-    return PostModel.fromMap(filter);
+  PostModel copyWithKey(PostModel data, String id) {
+    return data.copyWith(key: id);
+  }
+
+  @override
+  PostModel fromJson(Map<String, dynamic> record) {
+    return PostModel.fromJson(record);
   }
 }

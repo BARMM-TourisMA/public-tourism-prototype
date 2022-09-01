@@ -4,11 +4,13 @@ class AppContants {
   static String dateFormat = "yyyy/MM/dd hh:mm aaa";
   //collections
   static String postCollection = "posts";
+  static String locationCollection = "locations";
   //routes
   static String homeRoute = "/";
   static String startUpRoute = "/start";
   static String contributorRoute = "/contributor";
   static String postRoute = "/post";
+  static String locationRoute = "/location";
 
   //colors
   static Color backgroundColor = const Color(0xFF011530);
