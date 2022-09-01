@@ -154,6 +154,32 @@ class _LogInPageState extends State<LogInPage> {
                 ),
               ),
             ),
+            const SizedBox(
+              height: 30,
+            ),
+            Center(
+              child: InkWell(
+                onTap: (() {
+                  //
+                }),
+                child: Container(
+                  width: 150,
+                  decoration: BoxDecoration(
+                    color: Color(0xFF011530),
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Log In Anonymously',
+                      style: TextStyle(
+                        //fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
