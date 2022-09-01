@@ -18,11 +18,15 @@ PreferredSizeWidget buildAppBar(String userName) {
     title: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text("Welcome",
-            style: TextStyle(color: Colors.grey, fontSize: 14)),
+        Text("Welcome${userName == ''? ' to':''}",
+            style: const TextStyle(color: Colors.grey, fontSize: 14)),
         Text(
-          userName,
-          style: AppContants.defaultTextStyle,
+          userName == ''? "TouristMA":userName,
+          style: TextStyle(
+            color: AppContants.textColor,
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+          ),
         ),
       ],
     ),

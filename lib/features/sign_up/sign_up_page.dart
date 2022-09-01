@@ -1,7 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:public_tourism/common/constants.dart';
+import 'package:public_tourism/common/widgets/app_bar.dart';
+
+import '../../common/text_field_decoration.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -19,172 +20,167 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color(0xFF011530),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(
-              height: 16,
-            ),
-            Container(
-              margin: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                color: Colors.white,
-              ),
-              height: 200,
-            ),
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(4),
-              ),
-              child: TextField(
-                decoration: const InputDecoration(
-                  hintText: 'First Name',
-                ),
-              ),
-              height: 40,
-              width: 350,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(4),
-              ),
-              child: TextField(
-                decoration: const InputDecoration(
-                  hintText: 'Last Name',
-                ),
-              ),
-              height: 40,
-              width: 350,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(4),
-              ),
-              child: TextField(
-                decoration: const InputDecoration(
-                  hintText: 'Username',
-                ),
-              ),
-              height: 40,
-              width: 350,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(4),
-              ),
-              child: TextField(
-                decoration: const InputDecoration(
-                  hintText: 'Password',
-                ),
-              ),
-              height: 40,
-              width: 350,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(
-                          top: 8, bottom: 25, right: 2.5, left: 2.5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4),
-                        color: Colors.white,
-                      ),
-                      height: 40,
-                      width: 150,
-                      child: Row(
-                        children: [
-                          Checkbox(
-                            value: checkBox1isChecked,
-                            onChanged: (bool? value) {
-                              setState(() {
-                                checkBox1isChecked = value!;
-                              });
-                            },
-                          ),
-                          Center(
-                            child: Text('Explorer'),
-                          ),
-                        ],
-                      ),
+        backgroundColor: AppContants.backgroundColor,
+        appBar: buildAppBar(""),
+        body: SingleChildScrollView(
+          child: Stack(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      image: DecorationImage(image: Image.asset('../assets/wide-logo.png').image)
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(
-                          top: 8, bottom: 25, right: 2.5, left: 2.5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4),
-                        color: Colors.white,
-                      ),
-                      height: 40,
-                      width: 150,
-                      child: Row(
-                        children: [
-                          Checkbox(
-                            value: checkBox2isChecked,
-                            onChanged: (bool? value) {
-                              setState(() {
-                                checkBox2isChecked = value!;
-                              });
-                            },
+                    height: 200,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      children: [
+                        Text(
+                          "Personal Information:",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: AppContants.textColor),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        TextFormField(
+                          decoration: buildTextFieldDecorator(
+                            hintText: 'First Name',
                           ),
-                          Center(
-                            child: Text('Contributor'),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        TextFormField(
+                          decoration: buildTextFieldDecorator(
+                            hintText: 'Last Name',
                           ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            Center(
-                child: InkWell(
-              onTap: (() {
-                //
-              }),
-              child: Container(
-                width: 60,
-                decoration: BoxDecoration(
-                  color: Color(0xFF011530),
-                  borderRadius: BorderRadius.circular(25),
-                ),
-                child: Center(
-                  child: Text(
-                    'SIGN UP',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Text(
+                          "User Account:",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: AppContants.textColor),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        TextFormField(
+                          decoration: buildTextFieldDecorator(
+                            hintText: 'Username',
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        TextFormField(
+                          decoration: buildTextFieldDecorator(
+                            hintText: 'Password',
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(
+                                top: 8, bottom: 25, right: 2.5, left: 2.5),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(4),
+                              color: Colors.white,
+                            ),
+                            height: 40,
+                            width: 150,
+                            child: Row(
+                              children: [
+                                Checkbox(
+                                  value: checkBox1isChecked,
+                                  onChanged: (bool? value) {
+                                    setState(() {
+                                      checkBox1isChecked = value!;
+                                    });
+                                  },
+                                ),
+                                const Center(
+                                  child: Text('Explorer'),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(
+                                top: 8, bottom: 25, right: 2.5, left: 2.5),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(4),
+                              color: Colors.white,
+                            ),
+                            height: 40,
+                            width: 150,
+                            child: Row(
+                              children: [
+                                Checkbox(
+                                  value: checkBox2isChecked,
+                                  onChanged: (bool? value) {
+                                    setState(() {
+                                      checkBox2isChecked = value!;
+                                    });
+                                  },
+                                ),
+                                const Center(
+                                  child: Text('Contributor'),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Center(
+                      child: InkWell(
+                    onTap: (() {
+                      //
+                    }),
+                    child: Container(
+                      width: 60,
+                      decoration: BoxDecoration(
+                        color: AppContants.secondaryColor,
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'SIGN UP',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )),
+                ],
               ),
-            )),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -2,7 +2,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,11 +10,11 @@ import 'package:public_tourism/common/constants.dart';
 import 'package:public_tourism/common/models/location_model.dart';
 import 'package:public_tourism/common/models/post_model.dart';
 import 'package:public_tourism/common/models/upload_progress_model.dart';
+import 'package:public_tourism/common/text_field_decoration.dart';
 import 'package:public_tourism/common/widgets/tour_button.dart';
 import 'package:public_tourism/resource/location_resource.dart';
 
 import '../../common/widgets/app_bar.dart';
-import 'floating_modal.dart';
 
 class PostPage extends StatefulWidget {
   final PostModel? post;
@@ -33,8 +32,8 @@ class _PostPageState extends State<PostPage> {
   final TextEditingController _titleCtrl = TextEditingController();
   final TextEditingController _descriptionCtrl = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  final List<UploadProgressModel<dynamic>> _images = [];
   late FocusNode descFocusNode;
+  final List<UploadProgressModel<dynamic>> _images = [];
   String selectedCategory = "";
   bool isBusy = false;
   LocationModel? selectedLoc;
@@ -245,7 +244,9 @@ class _PostPageState extends State<PostPage> {
                               ],
                             );
                           } else {
-                            return const TourButton(label: "No Avalailable Places",);
+                            return const TourButton(
+                              label: "No Avalailable Places",
+                            );
                           }
                         },
                       ),
@@ -294,17 +295,7 @@ class _PostPageState extends State<PostPage> {
                           }
                         },
                         controller: _titleCtrl,
-                        decoration: InputDecoration(
-                          hintText: "Title",
-                          fillColor: AppContants.textFieldColor,
-                          filled: true,
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25.0),
-                          ),
-                        ),
+                        decoration: buildTextFieldDecorator(hintText: "Title"),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter title';
@@ -318,17 +309,8 @@ class _PostPageState extends State<PostPage> {
                         maxLines: 6,
                         enabled: !isBusy,
                         focusNode: descFocusNode,
-                        decoration: InputDecoration(
-                          hintText: "Description",
-                          fillColor: AppContants.textFieldColor,
-                          filled: true,
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25.0),
-                          ),
-                        ),
+                        decoration:
+                            buildTextFieldDecorator(hintText: "Description"),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter Description';
