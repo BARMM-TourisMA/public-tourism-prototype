@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:public_tourism/common/constants.dart';
 import 'package:public_tourism/firebase_options.dart';
 import 'package:public_tourism/routes.dart';
+import 'package:public_tourism/widget/latest_post.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,7 +37,7 @@ void main() async {
     );
   }
 
-  runApp(const PublicTourismApp());
+  runApp(const LatestPost());
 }
 
 class PublicTourismApp extends StatelessWidget {

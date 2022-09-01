@@ -15,6 +15,7 @@ PreferredSizeWidget buildAppBar(String userName) {
           image: DecorationImage(
               image: Image.asset('../../web/icons/icon-192.png').image)),
     ),
+    
     title: Column(
       children: [
         Wrap(
