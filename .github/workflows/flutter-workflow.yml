@@ -23,4 +23,4 @@ jobs:
       - run: flutter --version
       - run: flutter pub get
       # - run: flutter test --coverage
-      - run: flutter build web
+      - run: flutter build web  --web-renderer html
