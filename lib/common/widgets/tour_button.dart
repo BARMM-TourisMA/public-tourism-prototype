@@ -20,17 +20,8 @@ class TourButton extends StatelessWidget {
   bool get clickable {
     return loading != true && disabled != true;
   }
-  @override
-  Widget build(BuildContext context) {
-    return MouseRegion(
-      cursor: clickable ? SystemMouseCursors.click: SystemMouseCursors.forbidden,
-      child: GestureDetector(
-        onTap: () {
-          if (onPressed != null && clickable) {
-            onPressed?.call();
-          }
-        },
-        child: Container(
+  buildButton() {
+    return  Container(
           height: 45,
           margin: const EdgeInsets.all(10),
           decoration: BoxDecoration(
@@ -63,8 +54,20 @@ class TourButton extends StatelessWidget {
               ],
             ),
           ),
-        ),
-      ),
+        );
+  }
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      cursor: clickable ? SystemMouseCursors.click: SystemMouseCursors.forbidden,
+      child: (onPressed != null && clickable) ? GestureDetector(
+        onTap: () {
+          if (onPressed != null && clickable) {
+            onPressed?.call();
+          }
+        },
+        child: buildButton()
+      ): buildButton(),
     );
   }
 }
