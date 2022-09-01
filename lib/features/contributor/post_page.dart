@@ -2,7 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
+//import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -15,7 +15,7 @@ import 'package:public_tourism/common/widgets/tour_button.dart';
 import 'package:public_tourism/resource/location_resource.dart';
 
 import '../../common/widgets/app_bar.dart';
-import 'floating_modal.dart';
+//import 'floating_modal.dart';
 
 class PostPage extends StatefulWidget {
   final PostModel? post;
