@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:public_tourism/common/constants.dart';
+import 'package:public_tourism/common/sign_in_functions.dart';
+import 'package:public_tourism/common/widgets/app_bar.dart';
 import 'package:public_tourism/widget/latest_post.dart';
 import 'package:public_tourism/widget/most_heart_widget.dart';
 
@@ -16,10 +18,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 0, 24, 44),
-      appBar: AppBar(
-        title: const Text("TouristMA"),
-        backgroundColor: const Color.fromARGB(255, 0, 24, 44),
-      ),
+      appBar: buildAppBar(currentUser?.displayName?? ""),
       body: SingleChildScrollView(
 
         child: Column(

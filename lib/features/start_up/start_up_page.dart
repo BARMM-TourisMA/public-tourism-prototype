@@ -24,7 +24,7 @@ class _StartUpPageState extends State<StartUpPage> {
       }
     });
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

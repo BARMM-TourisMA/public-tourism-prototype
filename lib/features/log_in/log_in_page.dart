@@ -17,13 +17,13 @@ class LogInPage extends StatefulWidget {
 }
 
 class _LogInPageState extends State<LogInPage> {
-  final TextEditingController _userNameCtrl = TextEditingController();
+  final TextEditingController _emailCtrl = TextEditingController();
   final TextEditingController _passwordCtrl = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   late FocusNode _passwordFocusNode;
   void _login(BuildContext context) {
     if (!_formKey.currentState!.validate()) return;
-    signInWithEmailAndPass(_userNameCtrl.text, _passwordCtrl.text)
+    signInWithEmailAndPass(email: _emailCtrl.text, password: _passwordCtrl.text)
         .then((value) {
       Navigator.pushReplacementNamed(context, AppContants.homeRoute);
     }).catchError((e) {
@@ -176,7 +176,7 @@ class _LogInPageState extends State<LogInPage> {
                         height: 40,
                         width: 350,
                         child: TextFormField(
-                          controller: _userNameCtrl,
+                          controller: _emailCtrl,
                           decoration: const InputDecoration(
                             hintText: 'Username',
                           ),

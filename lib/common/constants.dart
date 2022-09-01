@@ -16,14 +16,17 @@ class AppContants {
 
   //colors
   static Color backgroundColor = const Color(0xFF011530);
-  static Color textFieldColor = const Color(0xFF00EEEE);
+  static Color textFieldColor = const Color(0xFFFFFFFF);
   static Color textColor = Colors.white;
   static Color secondaryColor = const Color(0xFF2D2C2C);
   //Common
   static double toolbarHeight = 70;
   static TextStyle defaultTextStyle = TextStyle(
-    color: textColor
+    color: secondaryColor,
+    fontSize: 14
   );
+
+  static String verificationUrl = "https://tourisma-5d4bd.web.app/";
 
   static List<String> postCategories = [
     "Culture",
