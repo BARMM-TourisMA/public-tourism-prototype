@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../constants.dart';
 
-
-
 // ignore: non_constant_identifier_names
 PreferredSizeWidget BuildUser(String userName) {
   return AppBar(
@@ -18,7 +16,6 @@ PreferredSizeWidget BuildUser(String userName) {
           image: DecorationImage(
               image: Image.asset('../../web/icons/icon-192.png').image)),
     ),
-    
     title: Column(
       children: [
         Wrap(
@@ -29,24 +26,21 @@ PreferredSizeWidget BuildUser(String userName) {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    const Text("Welcome",
+                  children: const [
+                    Text("Welcome to",
                         style: TextStyle(color: Colors.grey, fontSize: 14)),
-                    Text(
-                      userName,
-                      style: AppContants.defaultTextStyle,
-                    ),
+                    Text("TouristMA"),
+                    Text("Bringing BARMM to the realm of digital travellers.",
+                        style: TextStyle(color: Colors.grey, fontSize: 12)),
                   ],
                 ),
               ],
               //),
               //  ],
             ),
-            
           ],
         ),
       ],
     ),
   );
 }
-
