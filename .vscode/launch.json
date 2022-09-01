@@ -9,7 +9,8 @@
             "request": "launch",
             "type": "dart",
             "args": ["-d", "chrome"
-        //    ,"--dart-define=DEV_MODE=true"
+            ,"--dart-define=DEV_MODE=true"
+            , "--web-renderer", "html"
          ]
         },
         {

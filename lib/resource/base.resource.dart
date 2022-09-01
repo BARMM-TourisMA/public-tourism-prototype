@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hive/hive.dart';
 
 import 'package:public_tourism/common/models/resource_model.dart';
@@ -44,8 +45,8 @@ abstract class BaseResource<T extends ResourceModel, K> {
   Future<T?> syncGet(String key);
   Future<T?> syncUpdate(T record);
   Future<T?> syncPatch(T record, String field);
-  Stream<List<T>> stream({Filter? filter});
-
+  T fromJson(Map<String, dynamic> record);
+  T copyWithKey(T data, String id);
   //static fields
   static int requestDelay = 1000;
   void _manageDocSyncing(ResourceDoc<T> doc) async {
@@ -151,5 +152,22 @@ abstract class BaseResource<T extends ResourceModel, K> {
   Future<int> count() async {
     final box = await boxReady;
     return box.length;
+  }
+  Stream<List<T>> stream({Filter? filter}) async* {
+    final coll = FirebaseFirestore.instance.collection(collection);
+    final snapshot = coll.snapshots();
+    // final offline = await find(filter: filter);
+    // yield offline;
+    await for (QuerySnapshot q in snapshot) {
+      var list = q.docs.map((doc) {
+        final data = doc.data() as Map<String, dynamic>;
+
+        final model = fromJson(data);
+        final copy = copyWithKey(model, doc.id);
+        //setRecord(copy);
+        return copy;
+      }).toList();
+      yield list;
+    }
   }
 }

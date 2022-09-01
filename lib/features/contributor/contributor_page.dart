@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:public_tourism/common/constants.dart';
+import 'package:public_tourism/common/models/location_model.dart';
 import 'package:public_tourism/common/models/post_model.dart';
 import 'package:public_tourism/common/widgets/app_bar.dart';
 import 'package:public_tourism/common/widgets/post_item.dart';
 import 'package:public_tourism/common/widgets/tour_button.dart';
 import 'package:public_tourism/features/contributor/floating_modal.dart';
+import 'package:public_tourism/resource/location_resource.dart';
 import 'package:public_tourism/resource/post_resource.dart';
 
 class ContributorPage extends StatefulWidget {
@@ -74,21 +76,33 @@ class _ContributorPageState extends State<ContributorPage> {
                           anchorPoint: const Offset(0, 0),
                           builder: (context) => FloatingModal(
                             backgroundColor: const Color(0x55FFFFFF),
-                            child: Padding(
-                              padding: const EdgeInsets.all(20),
-                              child: Wrap(
-                                alignment: WrapAlignment.center,
-                                direction: Axis.horizontal,
-                                children: [
-                                  for (int i = 0; i < 7; i++) ...[
-                                    const SizedBox(width: 10),
-                                    buildLocationOption(
-                                        label: "Basilan",
-                                        image:
-                                            Image.asset('../../assets/tandu.jpg'))
-                                  ]
-                                ],
-                              ),
+                            child: StreamBuilder<List<LocationModel>>(
+                              stream: LocationResource.store.stream(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<List<LocationModel>> snapshot) {
+                                if (snapshot.hasData &&
+                                    snapshot.data!.isNotEmpty) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(20),
+                                    child: Wrap(
+                                      alignment: WrapAlignment.center,
+                                      direction: Axis.horizontal,
+                                      children: [
+                                        for (final loc in snapshot.data!) ...[
+                                          const SizedBox(width: 10),
+                                          buildLocationOption(
+                                              label: loc.title ?? 'No Title',
+                                              image: Image.network(
+                                                  loc.image ?? 'no-image'))
+                                        ]
+                                      ],
+                                    ),
+                                  );
+                                } else {
+                                  return const Center(
+                                      child: Text("No Place available"));
+                                }
+                              },
                             ),
                           ),
                         );
@@ -123,9 +137,9 @@ class _ContributorPageState extends State<ContributorPage> {
                         itemCount: snapshot.data!.length,
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
-                          final post = snapshot.data![index];  
+                          final post = snapshot.data![index];
                           return PostItem(
-                              images: post.attachments?? [],
+                              images: post.attachments ?? [],
                               title: post.title ?? 'No Title',
                               heartCount: post.hearts ?? 0,
                               description: post.description ?? 'No Description',
