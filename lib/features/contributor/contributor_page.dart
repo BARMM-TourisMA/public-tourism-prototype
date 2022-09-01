@@ -123,9 +123,9 @@ class _ContributorPageState extends State<ContributorPage> {
                         itemCount: snapshot.data!.length,
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
-                          final post = snapshot.data![index];
+                          final post = snapshot.data![index];  
                           return PostItem(
-                              imagePath: post.attachments!.first,
+                              images: post.attachments?? [],
                               title: post.title ?? 'No Title',
                               heartCount: post.hearts ?? 0,
                               description: post.description ?? 'No Description',

@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -6,11 +7,11 @@ class PostItem extends StatelessWidget {
   final String title;
   final String description;
   final String date;
-  final String imagePath;
+  final List<String> images;
   final int heartCount;
   const PostItem(
       {Key? key,
-      required this.imagePath,
+      required this.images,
       required this.title,
       required this.description,
       required this.date,
@@ -61,32 +62,49 @@ class PostItem extends StatelessWidget {
               margin: const EdgeInsets.only(top: 20),
               padding: const EdgeInsets.only(right: 10, top: 10),
               decoration: BoxDecoration(
-                color: Colors.grey,
-                image: DecorationImage(
-                    image: NetworkImage(imagePath), fit: BoxFit.cover),
+                color: AppContants.secondaryColor,
+                image: images.isNotEmpty ? DecorationImage(
+                    image: NetworkImage(images.first), fit: BoxFit.cover): null,
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.end,
+              child: Stack(
                 children: [
-                  Row(),
+                  if (images.length > 1)
+                    CarouselSlider(
+                        items: images.map((url) {
+                          return Padding(
+                            padding: const EdgeInsets.all(0),
+                            child: Image.network(url),
+                          );
+                        }).toList(),
+                        options: CarouselOptions(
+                            enlargeCenterPage: true,
+                            enableInfiniteScroll: false,
+                            viewportFraction: 1.0,
+                            height: 200)),
                   Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      const Icon(
-                        Icons.favorite,
-                        color: Colors.red,
+                      Row(),
+                      Column(
+                        children: [
+                          const Icon(
+                            Icons.favorite,
+                            color: Colors.red,
+                          ),
+                          Text(
+                            "$heartCount",
+                            style: TextStyle(
+                                color: AppContants.textColor,
+                                shadows: [
+                                  const Shadow(
+                                      color: Colors.black,
+                                      blurRadius: 2,
+                                      offset: Offset(2, 2))
+                                ].toList()),
+                          )
+                        ],
                       ),
-                      Text(
-                        "$heartCount",
-                        style: TextStyle(
-                          color: AppContants.textColor,
-                          shadows: [const Shadow(
-                            color: Colors.black,
-                            blurRadius: 2,
-                            offset: Offset(2, 2)
-                          )].toList()
-                        ),
-                      )
                     ],
                   ),
                 ],
