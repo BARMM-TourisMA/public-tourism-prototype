@@ -164,7 +164,7 @@ class _ContentDetailsPageState extends State<ContentDetailsPage> {
                                   margin: const EdgeInsets.only(
                                       top: 0, bottom: 0, right: 36, left: 4),
                                   child: Text(
-                                    'Back',
+                                    'Booking',
                                     style: TextStyle(
                                       color: Colors.white,
                                     ),
@@ -223,16 +223,17 @@ class _ContentDetailsPageState extends State<ContentDetailsPage> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Row(
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Container(
+                              padding: const EdgeInsets.all(8),
                               color: Colors.grey[850],
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Container(
-                                    margin: const EdgeInsets.all(4),
+                                    margin: const EdgeInsets.all(8),
                                     child: Text(
                                       "Description",
                                       style: TextStyle(
@@ -250,10 +251,11 @@ class _ContentDetailsPageState extends State<ContentDetailsPage> {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            "The establishment of Bangsamoro was the culmination of several years of peace talks between the Philippine government and several autonomist groups; in particular the Moro Islamic Liberation Front (MILF), which rejected the validity of the ARMM and called for the creation of a region with more powers devolved from the national government. A framework agreement known as the Comprehensive Agreement on the Bangsamoro was negotiated between the Benigno Aquino III administration and the MILF in 2014. After continued negotiations and debates over certain provisions, the Congress of the Philippines created and ratified a basic law for the region, now referred to as the Bangsamoro Organic Law; the bill was signed into law by President Rodrigo Duterte on July 26, 2018. Despite questions on the region's constitutionality, as it would have adopted a parliamentary system in an area of a country with a presidential system of government, no judicial ruling was made against the organic law and consequently the COMELEC held two-part plebiscite: one by ARMM citizens determining whether to dissolve the ARMM and immediately replace it with the Bangsamoro and, following the victory of the yes vote on the first part,[8][9][10] and the second part taken by neighboring municipalities and barangays in the provinces of Lanao del Norte and Cotabato regarding their cession to the Bangsamoro region.[11][12][13][14] As a result of the second part of the plebiscite, 63 barangays of Cotabato province were handed over to the Bangsamoro government, adding to the autonomous region's territory.[15",
+                                            "The establishment of Bangsamoro was the culmination of several years of peace talks between the Philippine government and several autonomist groups; in particular the Moro Islamic Liberation Front (MILF), which rejected the validity of the ARMM and called for the creation of a region with more powers devolved from the national government. A framework agreement known as the Comprehensive Agreement on the Bangsamoro was negotiated between the Benigno Aquino III administration and the MILF in 2014. After continued negotiations and debates over certain provisions, the Congress of the Philippines created and ratified a basic law for the region, now referred to as the Bangsamoro Organic Law; the bill was signed into law by President Rodrigo Duterte on July 26, 2018. Despite questions on the region's constitutionality, as it would have adopted a parliamentary system in an area of a country with a presidential system of government, no judicial ruling was made against the organic law and consequently the COMELEC held two-part plebiscite: one by ARMM citizens determining whether to dissolve the ARMM and immediately replace it with the Bangsamoro and, following the victory of the yes vote on the first part,[8][9][10] and the second part taken by neighboring municipalities and barangays in the provinces of Lanao del Norte and Cotabato regarding their cession to the Bangsamoro region.[11][12][13][14] As a result of the second part of the plebiscite, 63 barangays of Cotabato province were handed over to the Bangsamoro government, adding to the autonomous region's territory.",
                                             style: TextStyle(
                                               color: Colors.white,
                                             ),
+                                            textAlign: TextAlign.justify,
                                           ),
                                         ),
                                       ],
