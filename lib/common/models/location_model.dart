@@ -57,7 +57,7 @@ class LocationModel extends ResourceModel {
       key: '',
       title: json['title'] is String ? json['title'] : '',
       description: json['description'] is String ? json['description'] : '',
-      image: json['image'] is String ? json['location'] : '',
+      image: json['image'] is String ? json['image'] : '',
     );
   }
   @override
