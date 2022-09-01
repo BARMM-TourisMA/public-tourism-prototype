@@ -23,5 +23,9 @@ class AppContants {
     color: textColor
   );
 
-  static List<String> postCategories = ["Delicacies", "History", "Culture"];
+  static List<String> postCategories = [
+    "Culture",
+    "Tourist Spot", 
+    "Heritage", 
+  ];
 }
