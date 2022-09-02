@@ -33,7 +33,6 @@ class LatestPost extends StatelessWidget {
                 },
                 onHearted: () {
                   PostResource.store.updateData(post.id, post.copyWith(
-                    updated: true,
                     hearts: (post.hearts??0) + 1
                   ));
                 },
