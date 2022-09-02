@@ -10,6 +10,9 @@ import 'package:public_tourism/features/contributor/floating_modal.dart';
 import 'package:public_tourism/resource/location_resource.dart';
 import 'package:public_tourism/resource/post_resource.dart';
 
+import '../../common/auth_functions.dart';
+import '../../common/widgets/appbar_user.dart';
+
 class ContributorPage extends StatefulWidget {
   const ContributorPage({Key? key}) : super(key: key);
 
@@ -19,12 +22,16 @@ class ContributorPage extends StatefulWidget {
 
 class _ContributorPageState extends State<ContributorPage> {
   bool showTapPosts = false;
-  Widget buildLocationOption({required String label, required Image image}) {
+  LocationModel? selectedLoc;
+  Widget buildLocationOption({required String label, required Image image, VoidCallback? onPress}) {
     return Column(
       children: [
-        CircleAvatar(
-          radius: 40,
-          backgroundImage: image.image,
+        InkWell(
+          onTap: onPress,
+          child: CircleAvatar(
+            radius: 40,
+            backgroundImage: image.image,
+          ),
         ),
         const SizedBox(
           height: 10,
@@ -40,7 +47,9 @@ class _ContributorPageState extends State<ContributorPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar("Some user"),
+      appBar: (currentUser == null)
+          ? BuildUser("TouristMA")
+          : buildAppBar(currentUser!.displayName),
       backgroundColor: AppContants.backgroundColor,
       body: Column(children: [
         SizedBox(
@@ -67,9 +76,9 @@ class _ContributorPageState extends State<ContributorPage> {
                 child: Column(
                   children: [
                     TourButton(
-                      color: AppContants.textFieldColor,
+                      color: selectedLoc == null? AppContants.textFieldColor : Colors.black,
                       icon: Icons.filter_1,
-                      label: "Select Location",
+                      label: selectedLoc == null ? "Select Location" : "${selectedLoc!.title}",
                       onPressed: () {
                         showCupertinoModalPopup(
                           context: context,
@@ -93,7 +102,13 @@ class _ContributorPageState extends State<ContributorPage> {
                                           buildLocationOption(
                                               label: loc.title ?? 'No Title',
                                               image: Image.network(
-                                                  loc.image ?? 'no-image'))
+                                                  loc.image ?? 'no-image'),
+                                              onPress: () {
+                                                setState(() {
+                                                  selectedLoc = loc;
+                                                });
+                                                Navigator.of(context).pop();
+                                              })
                                         ]
                                       ],
                                     ),
@@ -109,7 +124,7 @@ class _ContributorPageState extends State<ContributorPage> {
                       },
                     ),
                     TourButton(
-                      color: AppContants.textFieldColor,
+                      color: selectedLoc == null? AppContants.textFieldColor : Colors.black,
                       icon: Icons.add_location_outlined,
                       label: "Create Post",
                       onPressed: () {
