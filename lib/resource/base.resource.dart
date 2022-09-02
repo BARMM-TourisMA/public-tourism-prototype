@@ -156,6 +156,7 @@ abstract class BaseResource<T extends ResourceModel, K> {
   Stream<List<T>> stream({Filter? filter}) async* {
     final coll = FirebaseFirestore.instance.collection(collection);
     final snapshot = coll.snapshots();
+    
     // final offline = await find(filter: filter);
     // yield offline;
     await for (QuerySnapshot q in snapshot) {
@@ -164,7 +165,7 @@ abstract class BaseResource<T extends ResourceModel, K> {
 
         final model = fromJson(data);
         final copy = copyWithKey(model, doc.id);
-        //setRecord(copy);
+        setRecord(copy);
         return copy;
       }).toList();
       yield list;

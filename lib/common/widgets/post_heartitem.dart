@@ -18,7 +18,6 @@ class HeartItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //print(imagesheart.first);
     return Container(
       margin: const EdgeInsets.all(4),
       padding: const EdgeInsets.all(6),
@@ -33,22 +32,31 @@ class HeartItem extends StatelessWidget {
                 fit: BoxFit.cover)
             : null,
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          const Icon(
-            Icons.favorite,
-            color: Colors.red,
+          Center(
+            child: Column(
+              children: [
+                const Icon(
+                  Icons.favorite,
+                  color: Colors.red,
+                ),
+                Text(
+                  "$heartCount1",
+                  style: TextStyle(
+                      color: AppContants.textColor,
+                      shadows: [
+                        const Shadow(
+                            color: Colors.black,
+                            blurRadius: 2,
+                            offset: Offset(2, 2))
+                      ].toList()),
+                )
+              ],
+            ),
           ),
-          Text(
-            "$heartCount1",
-            style: TextStyle(
-                color: AppContants.textColor,
-                shadows: [
-                  const Shadow(
-                      color: Colors.black, blurRadius: 2, offset: Offset(2, 2))
-                ].toList()),
-          )
         ],
       ),
     );

@@ -42,7 +42,14 @@ class PostModel extends ResourceModel {
       'attachments': attachments,
     };
   }
-
+  String get dateUpdatedStr {
+    final formater = DateFormat(AppContants.dateFormat);
+    return dateUpdated != null ? formater.format(dateUpdated!): dateCreatedStr;
+  }
+  String get dateCreatedStr {
+    final formater = DateFormat(AppContants.dateFormat);
+    return dateCreated != null ? formater.format(dateCreated!): "";
+  }
   String toJson() => json.encode(toMap());
 
   factory PostModel.fromJson(Map<String, dynamic> json) {

@@ -19,6 +19,9 @@ class _MostHeartState extends State<MostHeart> {
       builder:
           (BuildContext context, AsyncSnapshot<List<PostModel>> snapshot) {
         if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+          snapshot.data!.sort(((a, b) {
+            return (b.hearts ?? 0) - (a.hearts ?? 0);
+          }));
           return ListView.builder(
             itemCount: snapshot.data!.length,
             shrinkWrap: true,

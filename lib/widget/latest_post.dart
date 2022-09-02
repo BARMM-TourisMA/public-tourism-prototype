@@ -14,21 +14,29 @@ class LatestPost extends StatelessWidget {
       stream: PostResource.store.stream(),
       builder: (BuildContext context, AsyncSnapshot<List<PostModel>> snapshot) {
         if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+          snapshot.data!.sort(((a, b) {
+            return (a.dateUpdated?.millisecondsSinceEpoch ?? 0) - (b.dateUpdated?.millisecondsSinceEpoch ?? 0);
+          }));
           return ListView.builder(
             itemCount: snapshot.data!.length,
             shrinkWrap: true,
             itemBuilder: (context, index) {
               final post = snapshot.data![index];
-              return InkWell(
-                onTap: () { 
-                  Navigator.pushNamed(context, AppContants.detailsRoute);
+              return PostItem(
+                images: post.attachments ?? [],
+                title: post.title ?? 'No Title',
+                heartCount: post.hearts ?? 0,
+                description: post.description ?? 'No Description',
+                date: post.dateUpdatedStr,
+                onPressed: () {
+                  Navigator.pushNamed(context, AppContants.detailsRoute, arguments: post);
                 },
-                child: PostItem(
-                    images: post.attachments ?? [],
-                    title: post.title ?? 'No Title',
-                    heartCount: post.hearts ?? 0,
-                    description: post.description ?? 'No Description',
-                    date: post.dateUpdated.toString()),
+                onHearted: () {
+                  PostResource.store.updateData(post.id, post.copyWith(
+                    updated: true,
+                    hearts: (post.hearts??0) + 1
+                  ));
+                },
               );
             },
           );

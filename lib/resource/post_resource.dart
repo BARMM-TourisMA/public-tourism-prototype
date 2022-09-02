@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:public_tourism/common/constants.dart';
 import 'package:public_tourism/common/models/post_model.dart';
 import 'package:public_tourism/resource/base.resource.dart';
@@ -38,7 +39,9 @@ class PostResource extends BaseResource<PostModel, int> {
 
   @override
   Future<PostModel?> syncUpdate(PostModel record) async {
-    return null;
+    final coll = FirebaseFirestore.instance.collection(collection);
+    await coll.doc(record.id).set(record.toMap());
+    return record;
   }
 
   @override
