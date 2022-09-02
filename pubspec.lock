@@ -334,13 +334,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.6.1"
-  image_picker_web:
-    dependency: "direct main"
-    description:
-      name: image_picker_web
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.1.1"
   integration_test:
     dependency: "direct dev"
     description:

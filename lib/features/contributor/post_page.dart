@@ -2,10 +2,8 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:image_picker_web/image_picker_web.dart';
 import 'package:public_tourism/common/constants.dart';
 import 'package:public_tourism/common/models/location_model.dart';
 import 'package:public_tourism/common/models/post_model.dart';
@@ -45,25 +43,14 @@ class _PostPageState extends State<PostPage> {
   }
 
   void _pickImages() async {
-    if (kIsWeb) {
-      final fileImages = await ImagePickerWeb.getMultiImagesAsFile();
-      if (null != fileImages) {
-        setState(() {
-          _images.clear();
-          _images.addAll(fileImages.map(
-              (e) => UploadProgressModel(data: e, title: e.name, progress: 0)));
-        });
-      }
-    } else {
-      final picker = ImagePicker();
-      final fileImages = await picker.pickMultiImage();
-      if (null != fileImages) {
-        setState(() {
-          _images.clear();
-          _images.addAll(fileImages.map(
-              (e) => UploadProgressModel(data: e, title: e.name, progress: 0)));
-        });
-      }
+    final picker = ImagePicker();
+    final fileImages = await picker.pickMultiImage();
+    if (null != fileImages) {
+      setState(() {
+        _images.clear();
+        _images.addAll(fileImages.map(
+            (e) => UploadProgressModel(data: e, title: e.name, progress: 0)));
+      });
     }
   }
 
@@ -85,18 +72,13 @@ class _PostPageState extends State<PostPage> {
       final index = _images.indexOf(progress);
       late UploadTask task;
       late Reference snapshot;
-      if (kIsWeb) {
-        final info = progress.data;
-        snapshot = storeInstance.ref().child('images/${doc.id}/${info.name}');
-        task = snapshot.putBlob(
-            info.slice(), SettableMetadata(contentType: info.type));
-      } else {
-        final xfile = progress.data as XFile;
-        snapshot = storeInstance.ref().child('images/${doc.id}/${xfile.name}');
-        final bytes = await xfile.readAsBytes();
-        task = snapshot.putData(
-            bytes, SettableMetadata(contentType: xfile.mimeType));
-      }
+
+      final xfile = progress.data as XFile;
+      snapshot = storeInstance.ref().child('images/${doc.id}/${xfile.name}');
+      final bytes = await xfile.readAsBytes();
+      task = snapshot.putData(
+          bytes, SettableMetadata(contentType: xfile.mimeType));
+    
       task.snapshotEvents.listen((snap) {
         double value =
             snap.bytesTransferred.toDouble() / snap.totalBytes.toDouble();

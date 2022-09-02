@@ -1,13 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:public_tourism/common/constants.dart';
 import 'package:public_tourism/common/models/post_model.dart';
 import 'package:public_tourism/common/auth_functions.dart';
 import 'package:public_tourism/common/widgets/app_bar.dart';
 import '../../common/widgets/appbar_user.dart';
 import '../../common/widgets/scroll_details.dart';
-import '../../resource/post_resource.dart';
 
 class ContentDetailsPage extends StatefulWidget {
   const ContentDetailsPage({Key? key}) : super(key: key);
