@@ -48,7 +48,9 @@ class _ContentDetailsPageState extends State<ContentDetailsPage> {
                 children: [
                   Column(
                     children: [
-                      const SizedBox( height: 10,),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       if (null != post.attachments &&
                           post.attachments!.length > 1)
                         CarouselSlider(
@@ -123,27 +125,22 @@ class _ContentDetailsPageState extends State<ContentDetailsPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(
-                                    height: 70.0,
-                                    child: ListView.builder(
-                                            itemCount: post.attachments!.length,
-                                            physics:
-                                                const ClampingScrollPhysics(),
-                                            shrinkWrap: true,
-                                            scrollDirection: Axis.horizontal,
-                                            itemBuilder: (context, index) {
-                                              return ScrollDetails(
-                                                imagesheart:
-                                                    post.attachments![index],
-                                                titleheart:
-                                                    post.title ?? 'No Title',
-                                                heartCount1: post.hearts ?? 0,
-                                              );
-                                            },
-                                          ),
-
-                                    //color: Color.fromARGB(255, 7, 0, 37),
+                                  height: 70.0,
+                                  child: ListView.builder(
+                                    itemCount: post.attachments!.length,
+                                    physics: const ClampingScrollPhysics(),
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.horizontal,
+                                    itemBuilder: (context, index) {
+                                      return ScrollDetails(
+                                        imagesheart: post.attachments![index],
+                                        titleheart: post.title ?? 'No Title',
+                                        heartCount1: post.hearts ?? 0,
+                                      );
+                                    },
                                   ),
-                                                              ],
+                                ),
+                              ],
                             ),
                             Container(
                               padding:
