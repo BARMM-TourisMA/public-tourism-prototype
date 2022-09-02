@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class ScrollDetails extends StatelessWidget {
   final String titleheart;
 
-  final List<String> imagesheart;
+  final String imagesheart;
   final int heartCount1;
 
   const ScrollDetails(
@@ -17,7 +17,6 @@ class ScrollDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //print(imagesheart.first);
     return Container(
       margin: const EdgeInsets.all(4),
       padding: const EdgeInsets.all(6),
@@ -25,11 +24,9 @@ class ScrollDetails extends StatelessWidget {
       width: 50,
       
       decoration: BoxDecoration(
-        //border: Border.all(width: 1),
-       // borderRadius: BorderRadius.circular(20),
         image: imagesheart.isNotEmpty
             ? DecorationImage(
-                image: Image.network(imagesheart.first).image,
+                image: Image.network(imagesheart).image,
                 fit: BoxFit.cover)
             : null,
       ),

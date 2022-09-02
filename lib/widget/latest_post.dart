@@ -14,6 +14,9 @@ class LatestPost extends StatelessWidget {
       stream: PostResource.store.stream(),
       builder: (BuildContext context, AsyncSnapshot<List<PostModel>> snapshot) {
         if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+          snapshot.data!.sort(((a, b) {
+            return (a.dateUpdated?.millisecondsSinceEpoch ?? 0) - (b.dateUpdated?.millisecondsSinceEpoch ?? 0);
+          }));
           return ListView.builder(
             itemCount: snapshot.data!.length,
             shrinkWrap: true,
@@ -30,6 +33,7 @@ class LatestPost extends StatelessWidget {
                 },
                 onHearted: () {
                   PostResource.store.updateData(post.id, post.copyWith(
+                    updated: true,
                     hearts: (post.hearts??0) + 1
                   ));
                 },

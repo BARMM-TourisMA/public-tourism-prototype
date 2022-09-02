@@ -5,6 +5,8 @@ import 'package:public_tourism/widget/latest_post.dart';
 //import 'package:public_tourism/widget/most_heart_widget.dart';
 
 import '../../common/models/post_model.dart';
+import '../../common/sign_in_functions.dart';
+import '../../common/widgets/app_bar.dart';
 import '../../common/widgets/appbar_user.dart';
 import '../../resource/post_resource.dart';
 
@@ -19,7 +21,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: BuildUser("TouristMA"),
+      appBar: (currentUser == null)
+          ? BuildUser("TouristMA")
+          : buildAppBar(currentUser!.displayName),
       backgroundColor: AppContants.backgroundColor,
       body: SingleChildScrollView(
         child: Column(
@@ -41,9 +45,8 @@ class _HomePageState extends State<HomePage> {
                   alignment: Alignment.bottomLeft,
                   child: Text('Most heart posts',
                       style: AppContants.defaultTextStyle.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: AppContants.textColor
-                      ),
+                          fontWeight: FontWeight.bold,
+                          color: AppContants.textColor),
                       textDirection: TextDirection.ltr),
                 ),
                 Container(
@@ -118,7 +121,10 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {
                 //Navigator.pushNamed(context, AppContants.contributorRoute);
               },
-              icon: const Icon(Icons.apps, color: Colors.grey,)),
+              icon: const Icon(
+                Icons.apps,
+                color: Colors.grey,
+              )),
           IconButton(
               onPressed: () {
                 //Navigator.pushNamed(context, AppContants.contributorRoute);
