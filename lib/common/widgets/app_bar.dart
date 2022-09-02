@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:public_tourism/common/auth_functions.dart';
 
 import '../constants.dart';
 
-PreferredSizeWidget buildAppBar(String userName) {
+PreferredSizeWidget buildAppBar(String userName,{VoidCallback? signOutCb}) {
   return AppBar(
     backgroundColor: AppContants.backgroundColor,
     toolbarHeight: AppContants.toolbarHeight,
@@ -19,7 +20,7 @@ PreferredSizeWidget buildAppBar(String userName) {
     title: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Welcome${userName == ''? ' to':''}",
+        Text("Welcome${userName == ''? ' to':' to TouristMA'}",
             style: const TextStyle(color: Colors.grey, fontSize: 14)),
         Text(
           userName == ''? "TouristMA":userName,
@@ -31,5 +32,11 @@ PreferredSizeWidget buildAppBar(String userName) {
         ),
       ],
     ),
+    actions: [
+      if (userName != '' && signOutCb != null)
+      IconButton(
+        tooltip: "Sign Out",
+        onPressed: signOutCb, icon: const Icon(Icons.logout))
+    ],
   );
 }

@@ -69,3 +69,8 @@ Future<UserCredential> signUpWithEmailAndPass(
   }
   return authUser;
 }
+
+Future<void> signOutUser() async {
+  await FirebaseAuth.instance.signOut();
+  _user = null;
+}

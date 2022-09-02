@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:public_tourism/common/constants.dart';
 import 'package:public_tourism/common/widgets/post_heartitem.dart';
+import 'package:public_tourism/common/widgets/tour_button.dart';
 import 'package:public_tourism/widget/latest_post.dart';
 //import 'package:public_tourism/widget/most_heart_widget.dart';
 
 import '../../common/models/post_model.dart';
-import '../../common/sign_in_functions.dart';
+import '../../common/auth_functions.dart';
 import '../../common/widgets/app_bar.dart';
 import '../../common/widgets/appbar_user.dart';
 import '../../resource/post_resource.dart';
@@ -23,7 +24,31 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: (currentUser == null)
           ? BuildUser("TouristMA")
-          : buildAppBar(currentUser!.displayName),
+          : buildAppBar(currentUser!.displayName, signOutCb: () async {
+              await showDialog(
+                  context: context,
+                  builder: (_) {
+                    return AlertDialog(
+                      title: const Text("Are you sure?"),
+                      actions: [
+                        TourButton(label: "No", onPressed: () async {
+                            Navigator.of(context).pop();
+                        }),
+                        TourButton(
+                          label: "Yes",
+                          color: AppContants.secondaryColor,
+                          onPressed: () async {
+                            await signOutUser().then((value) => Navigator.of(context).pop());
+                            setState(() {
+                              authorizeUser();
+                            });
+                            
+                          },
+                        ),
+                      ],
+                    );
+                  });
+            }),
       backgroundColor: AppContants.backgroundColor,
       body: SingleChildScrollView(
         child: Column(

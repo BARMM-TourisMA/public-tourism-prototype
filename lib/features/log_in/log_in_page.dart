@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
 import 'package:public_tourism/common/constants.dart';
-import 'package:public_tourism/common/sign_in_functions.dart';
+import 'package:public_tourism/common/auth_functions.dart';
 import 'package:public_tourism/common/models/location_model.dart';
 import 'package:public_tourism/common/widgets/app_bar.dart';
 import 'package:public_tourism/common/widgets/tour_button.dart';

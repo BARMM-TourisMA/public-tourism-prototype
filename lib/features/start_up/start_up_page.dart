@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:public_tourism/common/constants.dart';
@@ -24,7 +23,7 @@ class _StartUpPageState extends State<StartUpPage> {
       }
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,25 +32,37 @@ class _StartUpPageState extends State<StartUpPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              'Welcome',
+              'Welcome to',
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 32),
+            Container(
+                margin: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: Image.asset('../assets/wide-logo.png').image)),
+                height: 200,
+              ),
+              
             if (null != currentUser) ...[
-              Text(currentUser!.displayName ?? currentUser!.uid),
+              Text(currentUser!.displayName ?? currentUser!.uid, style: AppContants.defaultTextStyle.copyWith(
+                fontWeight: FontWeight.bold,
+                fontSize: 20
+              ),),
               const SizedBox(
                 height: 10,
               ),
-              ElevatedButton(
-                onPressed: () {
+              TourButton(
+                icon: Icons.surfing,
+                color: AppContants.secondaryColor, 
+                label: "Explore Now!", onPressed: () {
                   Navigator.pushReplacementNamed(
                       context, AppContants.homeRoute);
-                },
-                child: const Text('Explore Now'),
-              )
+                },),
+              
             ] else ...[
               TourButton(
                 icon: Icons.login,
