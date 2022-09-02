@@ -18,7 +18,9 @@ class PostItem extends StatelessWidget {
       required this.title,
       required this.description,
       required this.date,
-      required this.heartCount, this.onPressed, this.onHearted})
+      required this.heartCount,
+      this.onPressed,
+      this.onHearted})
       : super(key: key);
 
   @override
@@ -68,20 +70,19 @@ class PostItem extends StatelessWidget {
               padding: const EdgeInsets.only(right: 10, top: 10),
               decoration: BoxDecoration(
                 color: AppContants.secondaryColor,
-                image: images.isNotEmpty ? DecorationImage(
-                    image: NetworkImage(images.first), fit: BoxFit.cover): null,
+                image: images.isNotEmpty
+                    ? DecorationImage(
+                        image: NetworkImage(images.first), fit: BoxFit.cover)
+                    : null,
               ),
               child: Stack(
                 children: [
                   if (images.length > 1)
                     CarouselSlider(
                         items: images.map((url) {
-                          return InkWell(
-                            onTap: onPressed,
-                            child: Padding(
-                              padding: const EdgeInsets.all(0),
-                              child: Image.network(url),
-                            ),
+                          return Padding(
+                            padding: const EdgeInsets.all(0),
+                            child: Image.network(url),
                           );
                         }).toList(),
                         options: CarouselOptions(
@@ -96,12 +97,9 @@ class PostItem extends StatelessWidget {
                       Row(),
                       Column(
                         children: [
-                          InkWell(
-                            onTap: onHearted,
-                            child: const Icon(
-                              Icons.favorite,
-                              color: Colors.red,
-                            ),
+                          const Icon(
+                            Icons.favorite,
+                            color: Colors.red,
                           ),
                           Text(
                             "$heartCount",
@@ -129,16 +127,17 @@ class PostItem extends StatelessWidget {
                   const SizedBox(
                     height: 15,
                   ),
-                  Text("Author:", style: AppContants.defaultTextStyle.copyWith(
-                    fontWeight: FontWeight.bold
-                  ),),
+                  Text(
+                    "Author:",
+                    style: AppContants.defaultTextStyle
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
                   Container(
                       alignment: Alignment.topLeft,
                       child: Text(
                         description,
-                        style: AppContants.defaultTextStyle.copyWith(
-                          color: Colors.white
-                        ),
+                        style: AppContants.defaultTextStyle
+                            .copyWith(color: Colors.white),
                         maxLines: 5,
                         overflow: TextOverflow.ellipsis,
                       )),
@@ -149,16 +148,18 @@ class PostItem extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                TourButton( 
-                  color: AppContants.secondaryColor,
-                  textColor: Colors.white, 
-                  label: "Details", 
-                  icon: Icons.info_outline_rounded, onPressed: onPressed),
-                TourButton( 
-                  color: AppContants.secondaryColor, 
-                  label: "", 
-                  textColor: Colors.red, 
-                  icon: Icons.favorite, onPressed: onHearted)
+                TourButton(
+                    color: AppContants.secondaryColor,
+                    textColor: Colors.white,
+                    label: "Details",
+                    icon: Icons.info_outline_rounded,
+                    onPressed: onPressed),
+                TourButton(
+                    color: AppContants.secondaryColor,
+                    label: "",
+                    textColor: Colors.red,
+                    icon: Icons.favorite,
+                    onPressed: onHearted)
               ],
             )
           ],
