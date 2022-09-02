@@ -12,7 +12,7 @@ PreferredSizeWidget buildAppBar(String userName,{VoidCallback? signOutCb}) {
           borderRadius: BorderRadius.circular(30),
           color: Colors.yellow,
           image: DecorationImage(
-              image: Image.asset('../../web/icons/icon-192.png').image)),
+              image: Image.asset('../../icons/icon-192.png').image)),
     ),
     
     title: Column(
