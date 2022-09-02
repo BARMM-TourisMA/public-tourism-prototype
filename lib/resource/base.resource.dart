@@ -164,7 +164,7 @@ abstract class BaseResource<T extends ResourceModel, K> {
 
         final model = fromJson(data);
         final copy = copyWithKey(model, doc.id);
-        //setRecord(copy);
+        setRecord(copy);
         return copy;
       }).toList();
       yield list;

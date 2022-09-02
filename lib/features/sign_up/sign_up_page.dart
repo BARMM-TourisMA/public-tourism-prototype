@@ -27,6 +27,7 @@ class _SignUpPageState extends State<SignUpPage> {
   late FocusNode _emailFocusNode;
   late FocusNode _passwordFocusNode;
   late FocusNode _confirmPasswordFocusNode;
+  bool _busy = false;
 
   String userType = "Explorer";
 
@@ -41,6 +42,9 @@ class _SignUpPageState extends State<SignUpPage> {
 
   void _submitRegistration(BuildContext context) {
     if (!_formKey.currentState!.validate()) return;
+    setState(() {
+      _busy = true;
+    });
     signUpWithEmailAndPass(
             email: _emailCtrl.text,
             password: _passwordCtrl.text,
@@ -165,6 +169,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             TextFormField(
                               controller: _firstNameCtrl,
                               style: AppContants.defaultTextStyle,
+                              enabled: !_busy,
                               decoration: buildTextFieldDecorator(
                                 hintText: 'First Name',
                               ),
@@ -186,6 +191,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             TextFormField(
                               controller: _lastNameCtrl,
                               focusNode: _lastNameFocusNode,
+                              enabled: !_busy,
                               style: AppContants.defaultTextStyle,
                               decoration: buildTextFieldDecorator(
                                 hintText: 'Last Name',
@@ -219,6 +225,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               controller: _emailCtrl,
                               focusNode: _emailFocusNode,
                               style: AppContants.defaultTextStyle,
+                              enabled: !_busy,
                               decoration: buildTextFieldDecorator(
                                 hintText: 'eMail',
                               ),
@@ -242,6 +249,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               focusNode: _passwordFocusNode,
                               obscureText: true,
                               style: AppContants.defaultTextStyle,
+                              enabled: !_busy,
                               decoration: buildTextFieldDecorator(
                                 hintText: 'Password',
                               ),
@@ -264,6 +272,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               controller: _confirmPasswordCtrl,
                               focusNode: _confirmPasswordFocusNode,
                               obscureText: true,
+                              enabled: !_busy,
                               style: AppContants.defaultTextStyle,
                               onFieldSubmitted: (value) {
                                 if (value.isNotEmpty) {
@@ -332,6 +341,8 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                       TourButton(
                         label: "SIGN UP",
+                        loading: _busy,
+                        disabled: _busy,
                         color: AppContants.textFieldColor,
                         onPressed: () => _submitRegistration(context),
                       ),

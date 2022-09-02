@@ -19,16 +19,20 @@ class LatestPost extends StatelessWidget {
             shrinkWrap: true,
             itemBuilder: (context, index) {
               final post = snapshot.data![index];
-              return InkWell(
-                onTap: () { 
-                  Navigator.pushNamed(context, AppContants.detailsRoute);
+              return PostItem(
+                images: post.attachments ?? [],
+                title: post.title ?? 'No Title',
+                heartCount: post.hearts ?? 0,
+                description: post.description ?? 'No Description',
+                date: post.dateUpdatedStr,
+                onPressed: () {
+                  Navigator.pushNamed(context, AppContants.detailsRoute, arguments: post);
                 },
-                child: PostItem(
-                    images: post.attachments ?? [],
-                    title: post.title ?? 'No Title',
-                    heartCount: post.hearts ?? 0,
-                    description: post.description ?? 'No Description',
-                    date: post.dateUpdated.toString()),
+                onHearted: () {
+                  PostResource.store.updateData(post.id, post.copyWith(
+                    hearts: (post.hearts??0) + 1
+                  ));
+                },
               );
             },
           );

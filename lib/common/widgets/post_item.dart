@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:public_tourism/common/widgets/tour_button.dart';
 
 import '../constants.dart';
 
@@ -9,13 +10,15 @@ class PostItem extends StatelessWidget {
   final String date;
   final List<String> images;
   final int heartCount;
+  final VoidCallback? onPressed;
+  final VoidCallback? onHearted;
   const PostItem(
       {Key? key,
       required this.images,
       required this.title,
       required this.description,
       required this.date,
-      required this.heartCount})
+      required this.heartCount, this.onPressed, this.onHearted})
       : super(key: key);
 
   @override
@@ -27,6 +30,7 @@ class PostItem extends StatelessWidget {
             color: AppContants.secondaryColor),
         child: Column(
           children: [
+            //Header
             Container(
               margin: const EdgeInsets.only(top: 5, right: 10, left: 10),
               child: Stack(
@@ -57,6 +61,7 @@ class PostItem extends StatelessWidget {
                 ],
               ),
             ),
+            //Body
             Container(
               height: 200,
               margin: const EdgeInsets.only(top: 20),
@@ -71,9 +76,12 @@ class PostItem extends StatelessWidget {
                   if (images.length > 1)
                     CarouselSlider(
                         items: images.map((url) {
-                          return Padding(
-                            padding: const EdgeInsets.all(0),
-                            child: Image.network(url),
+                          return InkWell(
+                            onTap: onPressed,
+                            child: Padding(
+                              padding: const EdgeInsets.all(0),
+                              child: Image.network(url),
+                            ),
                           );
                         }).toList(),
                         options: CarouselOptions(
@@ -88,9 +96,12 @@ class PostItem extends StatelessWidget {
                       Row(),
                       Column(
                         children: [
-                          const Icon(
-                            Icons.favorite,
-                            color: Colors.red,
+                          InkWell(
+                            onTap: onHearted,
+                            child: const Icon(
+                              Icons.favorite,
+                              color: Colors.red,
+                            ),
                           ),
                           Text(
                             "$heartCount",
@@ -110,6 +121,7 @@ class PostItem extends StatelessWidget {
                 ],
               ),
             ),
+            //Footer
             Container(
               margin: const EdgeInsets.only(left: 10, right: 10, bottom: 5),
               child: Column(
@@ -117,14 +129,37 @@ class PostItem extends StatelessWidget {
                   const SizedBox(
                     height: 15,
                   ),
+                  Text("Author:", style: AppContants.defaultTextStyle.copyWith(
+                    fontWeight: FontWeight.bold
+                  ),),
                   Container(
                       alignment: Alignment.topLeft,
                       child: Text(
                         description,
-                        style: AppContants.defaultTextStyle,
+                        style: AppContants.defaultTextStyle.copyWith(
+                          color: Colors.white
+                        ),
+                        maxLines: 5,
+                        overflow: TextOverflow.ellipsis,
                       )),
                 ],
               ),
+            ),
+            //Actions
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TourButton( 
+                  color: AppContants.secondaryColor,
+                  textColor: Colors.white, 
+                  label: "Details", 
+                  icon: Icons.info_outline_rounded, onPressed: onPressed),
+                TourButton( 
+                  color: AppContants.secondaryColor, 
+                  label: "", 
+                  textColor: Colors.red, 
+                  icon: Icons.favorite, onPressed: onHearted)
+              ],
             )
           ],
         ));
