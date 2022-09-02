@@ -88,7 +88,9 @@ class _LogInPageState extends State<LogInPage> {
               alignment: Alignment.bottomLeft,
               child: Text(
                 'Bringing BARMM to the realm of digital travelers',
-                style: AppContants.defaultTextStyle,
+                style: AppContants.defaultTextStyle.copyWith(
+                  color: Colors.white
+                ),
               ),
             ),
             Expanded(
@@ -178,11 +180,11 @@ class _LogInPageState extends State<LogInPage> {
                         child: TextFormField(
                           controller: _emailCtrl,
                           decoration: const InputDecoration(
-                            hintText: 'Username',
+                            hintText: 'email',
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Username is required';
+                              return 'email is required';
                             }
                             return null;
                           },
