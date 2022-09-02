@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:public_tourism/common/auth_functions.dart';
-
 import '../constants.dart';
 
 PreferredSizeWidget buildAppBar(String userName,{VoidCallback? signOutCb}) {
