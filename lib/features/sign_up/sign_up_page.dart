@@ -148,7 +148,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         margin: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
                             image: DecorationImage(
-                                image: Image.asset('../assets/wide-logo.png')
+                                image: Image.asset('../assets/wide_logo.png')
                                     .image)),
                         height: 200,
                       ),
